@@ -26,8 +26,8 @@ function print_step()
 function stage_1
 {	
 	cd `dirname $0`;
-	read -e -p "Path to root tree folder that you want to compress (/gentoo_install_configs): " ROOT_TREE_DIRECTORY;
-	ROOT_TREE_DIRECTORY=${ROOT_TREE_DIRECTORY:-"/gentoo_install_configs"}
+	read -e -p "Path to root tree folder that you want to compress (/root_dir): " ROOT_TREE_DIRECTORY;
+	ROOT_TREE_DIRECTORY=${ROOT_TREE_DIRECTORY:-"/root_dir"}
 	
 	print_step "Cleaning $ROOT_TREE_DIRECTORY by removing any .DS_Store, Thumbs.db, and/or ._*"
 	find $ROOT_TREE_DIRECTORY/ -name '.DS_Store' -exec rm -f {} \;
@@ -36,14 +36,14 @@ function stage_1
 	
 	print_step "Compressing file tree"
 	cd "$ROOT_TREE_DIRECTORY";
-	tar czvf `dirname $0`/`basename $ROOT_TREE_DIRECTORY`.tar.gz -C $ROOT_TREE_DIRECTORY ./*
+	tar czvf ../`dirname $0`/`basename $ROOT_TREE_DIRECTORY`.tar.gz -C $ROOT_TREE_DIRECTORY ./*
 }
 
 function stage_2
 {
-read -e -p "Path to root tree folder that you want to compress (/gentoo_install_configs): " ROOT_TREE_DIRECTORY;
-	ROOT_TREE_DIRECTORY=${ROOT_TREE_DIRECTORY:-"/gentoo_install_configs"}
-read -e -p "Type the file path of your root directory ($ROOT_DIRECTORY): " ROOT_DIRECTORY;
+read -e -p "Path to root tree folder that you want to compress (/root_dir): " ROOT_TREE_DIRECTORY;
+	ROOT_TREE_DIRECTORY=${ROOT_TREE_DIRECTORY:-"/root_dir"}
+read -e -p "Type the file path of your root directory (/): " ROOT_DIRECTORY;
 	ROOT_DIRECTORY=${ROOT_DIRECTORY:-"/"}
 print_step "Adding/Replacing files from the archive tree called `basename $ROOT_TREE_DIRECTORY`.tar.gz and replacing any files that is conflicts in $ROOT_DIRECTORY"
 echo "You must need to know what you're replacing. You made the file tree and you will pay for your mistakes after point. OK!"; read;
@@ -72,4 +72,3 @@ Adds\t\t/home/shared/awesome_scripts_I_made"
 }
 
 stage_$choice
-echo "Done"

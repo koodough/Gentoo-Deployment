@@ -1,0 +1,3 @@
+#!/bin/bash
+x11vnc -wireframe -scrollcopyrect -notruecolor -loop -solid black -passwd x
+#-scale 1/5

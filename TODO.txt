@@ -1,0 +1,148 @@
+TODO
+####
+
+Soon
+* Replace htpdate with ntpdate
+* Add Compiz
+* Add Power Management
+* LVM support
+* Get the latest stage3
+* Guess what architecture the system is
+* Create a suggested make.conf file
+* Fix Distcc parsing for multiple IP addresses
+* Detect to see if the OS architecture can chroot. If it fails instruct to to do it properly 
+* Fix Grub and the tab, if that messes up DOOM will happen. Will never boot correctly until its deleted in mtab. Maybe just delete mtab once 
+* Add udev to rc-update for the mouse and keyboard to work
+* Error Capture - No sys folder no Xorg!!! ok!
+* Fix bash complete with a #
+
+
+Later
+* Create modules. Scripts with options to add to the gentoo deployment. AFP, GNOME, KDE, etc.. would be in separate files
+* DHCP or Manual option
+* Test for internet before starting
+* Ask if you plan on compiling your own kernel or using genkernel and emerge if necessary
+* Better MD5 sum method to verify
+* Support Graphics cards
+
+Version 4
+* Work on multiple architectures - x86, amd64, PPC, PPC64 using a skeleton commands for that arch
+* Ncurses support
+* Rewrite in Python?
+
+
+For Linuxraptor
+* Create the flags for the make.conf that would be equivalent to march=native
+
+####Thoughts
+Python
+Stack for the function. Have the script run while there still could be errors
+
+
+Root Tree
+##########
+Awesome Conky Theme. Tron like. Welcome message
+
+
+Options
+#######
+gentoo deployment
+
+--compress_root_tree | --compress | -c
+
+--decompress_root_tree | --decompress | -d
+
+--set_gentoo_variables | -s
+
+--install_gentoo | --install | -i [pre_chroot | chroot | emerge]
+
+
+#File 1:Configure
+#Ask for which step
+#Step 1:Pre chroot
+	#Ask for Date
+		#NO
+			#Fix the date with htpdate, which may be on the live cd
+				#NO
+					#Manually set it then
+	#Ask for root parition
+	#Ask for boot parition
+	#Ask for chroot directory. Default is /mnt/gentoo
+
+	#Variables
+	#ROOT_PARTITION
+	#BOOT_PARTITION
+	#CHROOT_DIR
+	#STAGE3_URL
+	#PORTAGE_URL
+	#Ask if to use a root tree package
+		#Yes. List root tree packages
+		#No. Tell them that they need to make their make.conf
+	
+#Step 2:Pre Install
+	#DO necessary stuff, maybe ask for this stuff
+	#Ask for localtime. Default is America/Chicago. Setup localtime and the clock
+	#Do env-update && source /etc/profile and export PS1="(chroot) $PS1"
+	#Ask password for root
+	#Ask name of user and password
+	#Ask for Hostname. It will set hostname, dns
+	#Do locale.gen
+	
+	#System Profile!
+
+	###Ask for type of system####
+	#GNOME, KDE, AWESOME, X, NONE#
+	#This will setup anything necessary to setup those systems. Setp Packages, run commands
+	###Services###
+	#Distcc
+	#Bash Complete
+	#Grub
+	#htpdate
+	#Power Managment
+	
+	
+
+#File 2: Execution
+#Choose option
+#Step 1: Pre chroot
+	#Mount root parition to chroot directory
+	#Mount boot parition to chroot/boot directoy
+	#Find the architecture (i686, x86_64, PPC, PPC64)
+	#Download Stage3
+	#Make sure Stage3 matches the md5 sum
+	#Unpack Stage3
+	#Download Portage
+	#Make sure Portage matches the md5 sum
+	#Unpack Portage
+	#Copy resolve.conf
+	
+
+#Step 2: Pre install
+#Step 3: Install
+#Step 4: Post install
+#Step 5: Print post message
+#Do all steps
+
+
+
+
+# Tips for /etc/fstab
+# Could this be done in parallel?
+# Implement mirrorselect
+# Print out what you need to know in the beginning
+# Eix a list of kernel sources and ask what kernel they prefer.
+# Should follow the Gentoo Guide steps
+
+#Step 1 - Is date correct?
+#Step 2 - Make directory for chroot
+#Step 3 - Download Stage3 and Portage
+#Step 4 - Move over resolv.conf
+#Step 5 - Mount nessessary folder /proc /dev
+#Step 6 - Message to setup Make.conf and display infomation important to do so
+#Step 7 - Setup root password, User with groups, DNS hostname, hostname, System Profiler
+#Step 8 - Ask for Grub2, Gnome/KDE/XFCE,Openbox, User Friendly packages (gentoolkit, app-shells/bash-completion, eix), ACPI
+#Step 9 - Emerge... the long coffee break
+#Step 10- Setup locale-gen, DHCP, Timezone, htpdate, rc-update necessary packages
+#Step 11- Print out the next things they need to do, Kernel, Grub, and fstab. Also mention what needs to be done for maintenance
+
+#Please run this as root. The gentoo handbook was designed to be in a root shell
