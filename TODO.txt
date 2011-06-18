@@ -8,8 +8,15 @@ Soon
 * LVM support
 * Get the latest stage3
 * Guess what architecture the system is
-* Create a suggested make.conf file
-* Fix Distcc parsing for multiple IP addresses
+* Create a suggested make.conf file to include
+	* LINGUAS="de fi en"
+	* Use Flags for the packages installed
+	* Recommended MAKEOPTS
+	* VIDEO_CARDS
+	* INPUT_DEVICES="evdev synaptics v4l"
+	* ACCEPT_LICENSE="*"
+	* Fastest Mirrors
+* Fix Distcc parsing for multiple IP addresses when entered by the user
 * Detect to see if the OS architecture can chroot. If it fails instruct to to do it properly 
 * Fix Grub and the tab, if that messes up DOOM will happen. Will never boot correctly until its deleted in mtab. Maybe just delete mtab once 
 * Add udev to rc-update for the mouse and keyboard to work
@@ -18,7 +25,6 @@ Soon
 
 
 Later
-* Create modules. Scripts with options to add to the gentoo deployment. AFP, GNOME, KDE, etc.. would be in separate files
 * DHCP or Manual option
 * Test for internet before starting
 * Ask if you plan on compiling your own kernel or using genkernel and emerge if necessary
@@ -27,6 +33,7 @@ Later
 
 Version 4
 * Work on multiple architectures - x86, amd64, PPC, PPC64 using a skeleton commands for that arch
+* Create modules. Scripts with options to add to the gentoo deployment. AFP, GNOME, KDE, etc.. would be in separate files
 * Ncurses support
 * Rewrite in Python?
 

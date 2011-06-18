@@ -5,20 +5,39 @@ Soon
 * Replace htpdate with ntpdate
 * Add Compiz
 * Add Power Management
+* LVM support
 * Get the latest stage3
 * Guess what architecture the system is
 * Create a suggested make.conf file
 * Fix Distcc parsing for multiple IP addresses
+* Detect to see if the OS architecture can chroot. If it fails instruct to to do it properly 
+* Fix Grub and the tab, if that messes up DOOM will happen. Will never boot correctly until its deleted in mtab. Maybe just delete mtab once 
+* Add udev to rc-update for the mouse and keyboard to work
+* Error Capture - No sys folder no Xorg!!! ok!
+* Fix bash complete with a #
+
 
 Later
 * Create modules. Scripts with options to add to the gentoo deployment. AFP, GNOME, KDE, etc.. would be in separate files
-* Ncurses support
 * DHCP or Manual option
 * Test for internet before starting
 * Ask if you plan on compiling your own kernel or using genkernel and emerge if necessary
+* Better MD5 sum method to verify
+* Support Graphics cards
+
+Version 4
+* Work on multiple architectures - x86, amd64, PPC, PPC64 using a skeleton commands for that arch
+* Ncurses support
+* Rewrite in Python?
+
 
 For Linuxraptor
 * Create the flags for the make.conf that would be equivalent to march=native
+
+####Thoughts
+Python
+Stack for the function. Have the script run while there still could be errors
+
 
 Root Tree
 ##########

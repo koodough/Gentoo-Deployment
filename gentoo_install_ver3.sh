@@ -119,7 +119,16 @@ function kernel_settings_recommendation
 	fi
 }
 
+function test_variables
+{
+    #Ping
+    ping -c 3 $STAGE3_URL > /dev/null # try 3 pings and redirect output to /dev/null
+    if [ $? -eq 0 ]; then 
+        #code to mount the share
+    fi
 
+
+}
 
 
 
@@ -189,7 +198,7 @@ function pre_chroot
 			gentoo_commander pre_install "mirrorselect -s3 -b10 -o -D >> /etc/make.conf"; break;;
 		*) echo "Make sure you have a mirror picked your make.conf"; break;;
 	esac
-	done
+
 	
 	#Pick a computer architecture. The ones in grey are not supported
 	#GENTOO_MIRRORS="http://mirrors.cs.wmich.edu/gentoo http://chi-10g-1-mirror.fastsoft.net/pub/linux/gentoo/gentoo-distfiles/ http://gentoo.cites.uiuc.edu/pub/gentoo/"
@@ -214,7 +223,7 @@ function pre_install
 	cd /usr/share/zoneinfo
 	read -e -p "Localtime (America/Chicago):" LOCALTIME;
 	LOCALTIME=${LOCALTIME:-"America/Chicago"}
-	cd /
+    cd /
 	
 	#ROOT
 	while true; do
