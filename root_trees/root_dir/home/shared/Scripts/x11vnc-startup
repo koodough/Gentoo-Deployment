@@ -1,0 +1,2 @@
+#!/bin/bash
+x11vnc -wireframe -scrollcopyrect -notruecolor -solid black -loop -ncache -xrefresh 60 -passwd x

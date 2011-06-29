@@ -1,14 +1,45 @@
 TODO
 ####
 
-Soon
-* Replace htpdate with ntpdate
-* Add Compiz
-* Add Power Management
-* LVM support
-* Get the latest stage3
-* Guess what architecture the system is
-* Create a suggested make.conf file to include
+
+
+File and Order Structure
+
+install.sh - "install.sh is the framework that the other scripts will be sources from."
+
+    "Hello, $USER, you are about to install Gentoo on this computer is this what you want to do? Yes or No"
+    Yes
+    "Ok I have a couple of questions before I install this for you"
+    
+    Configure System  - (all automatic)
+    Find out Localtime
+    Get the latest Stage3
+    Installs essential packages
+        STANDARD_PACKAGES="syslog-ng vixie-cron mlocate dhcpcd pciutils hwinfo app-misc/screen sudo eix gentoolkit lafilefixer app-arch/lzop net-misc/openssh net-misc/openssh-blacklist gpm htop powertop latencytop net-misc/htpdate sys-power/acpid"
+    Portage File structure
+    locale-gen
+    ...
+    
+
+#Options for ALL#
+    /
+    Date Correct?: 
+    Select Chroot directory (/mnt/gentoo):
+    Select Root partition if blank chroot only!:  
+    Select Boot partition ($ROOT_PARTITON): 
+
+    Computer's name (localhost): 
+	Username (Gentoo): 
+	Password:
+	Password again:
+	Root password
+	Password again:
+
+        
+    	Permission to edit make.conf  - Which will then instead of saving the generated make.conf as make.conf.gen, use make.conf
+
+	MAKE.CONF
+	* Create a suggested make.conf file to include
 	* LINGUAS="de fi en"
 	* Use Flags for the packages installed
 	* Recommended MAKEOPTS
@@ -16,12 +47,56 @@ Soon
 	* INPUT_DEVICES="evdev synaptics v4l"
 	* ACCEPT_LICENSE="*"
 	* Fastest Mirrors
+
+    Arch Questions
+
+    Feature Questions
+    
+
+
+/Arch - "These are scripts that will run for that specifc architecture with all the gentoo essentail commands - Following the Gentoo Guide"
+    x86
+    Amd64
+    PPC
+    PPC64
+
+/Features - "These are scripts that will run at certain times during the process of the gentoo install to install that feature"
+    - "List of features."
+        - DHCP or Manual
+        - Use Distcc when compiling
+        - What kind of windows manager you want
+        - Bash complete
+        - GRUB
+        - Mirrorselect
+        - Power Managment
+        - Compiz
+        - AFP
+        - Gnome
+        - Awesome
+        - KDE
+        - Kernel
+        - Root Tree Package 
+	- Pulseaudio
+ 	#Root Tree tar file (Can be online or in the filesytem
+	#Option to download from a website
+	
+
+
+/Disabled-Features - "Features that are not going to be in use for the gentoo install"
+
+_______________________________________________________________________________________________
+
+Soon
+* Replace htpdate with ntpdate
+* Add Compiz
+* Add Power Management
+* LVM support
+* Get the latest stage3
+* Guess what architecture the system is
+
 * Fix Distcc parsing for multiple IP addresses when entered by the user
 * Detect to see if the OS architecture can chroot. If it fails instruct to to do it properly 
 * Fix Grub and the tab, if that messes up DOOM will happen. Will never boot correctly until its deleted in mtab. Maybe just delete mtab once 
-* Add udev to rc-update for the mouse and keyboard to work
-* Error Capture - No sys folder no Xorg!!! ok!
-* Fix bash complete with a #
 
 
 Later
@@ -33,7 +108,6 @@ Later
 
 Version 4
 * Work on multiple architectures - x86, amd64, PPC, PPC64 using a skeleton commands for that arch
-* Create modules. Scripts with options to add to the gentoo deployment. AFP, GNOME, KDE, etc.. would be in separate files
 * Ncurses support
 * Rewrite in Python?
 
