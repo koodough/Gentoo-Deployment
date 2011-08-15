@@ -24,7 +24,8 @@ while true; do
 		gentoo_commander pre_install "echo \"gnome-base/gnome-session branding\" >> /etc/portage/package.use";
 		gentoo_commander pre_install "echo -e \"#Gnome\\\nx11-themes/gnome-colors-themes\\\nx11-themes/gnome-colors-common\\\n\\\n\" >> /etc/portage/package.keywords";
 		gentoo_commander pre_install "echo -e \"#Adobe Flash\\\nwww-plugins/adobe-flash\\\n\\\n\" >> /etc/portage/package.keywords";
-		gentoo_commander post_message "Gnome: Helpful use flags for your make.conf -qt4 -kde X dbus gtk gnome";
+		gentoo_commander use_flags "-qt4 -kde X dbus gtk gnome";
+		gentoo_commander post_message "Gnome: Use flags for your make.conf -qt4 -kde X dbus gtk gnome";
 		break;;
 		#None
 		[Nn]* ) PACKAGES="$PACKAGES $STANDARD_PACKAGES;"; break;;

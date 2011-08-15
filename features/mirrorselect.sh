@@ -1,6 +1,8 @@
 #!/bin/bash
 #Setups the fastest mirrors for gentoo
 
+gentoo_commander pre_install	"USE=\"-*\" emerge mirrorselect"
+
 while true; do
 	read -p "Use mirrorselect to choose a mirror, pick the fastest mirror (~7min), or neither? mirror/fast/neither (neither): " yn;
 	case $yn in

@@ -6,6 +6,9 @@
 #set -x
 
 #Print the action the gentoo install script is doing
+
+directory_name="$( cd "$( dirname "$0" )" && pwd )"
+
 function print_step
 {
 	echo -e "\033[32m* \033[1;37m$1 \033[00m"	
@@ -46,8 +49,8 @@ function gentoo_commander
 	#echo "$command"
 
 	case "$when" in
-		"make_config")	MAKE_CONFIG="$MAKE_CONFIG $command \n\n";;
-		"use_flags")	USE_FLAGS="$USE_FLAGS $command \n\n";;
+		"make_config")	MAKE_CONFIG="$MAKE_CONFIG $command \n";;
+		"use_flags")	USE_FLAGS="$USE_FLAGS $command ";;
 		"pre_chroot")	PRE_CHROOT="$PRE_CHROOT && $command";;
 		"pre_install")	PRE_INSTALL="$PRE_INSTALL && $command";;
 		"post_install")	POST_INSTALL="$POST_INSTALL && $command";;
@@ -81,12 +84,13 @@ function save_variables
 
 	#Remove the previous gentoo variables
 	print_step "Removing the old gentoo_variables file"
-	rm gentoo_variables;
+	rm "$directory_name/gentoo_variables";
 
 	print_step "Creating the gentoo_variables file"
+	print_step "Saving the gentoo_variables in $directory_name/gentoo_variables"
 	for name in ${var_name[@]}; do
 		var=`eval echo $\`echo $name\``
-		echo "$name=\"$var\"" >> gentoo_variables
+		echo "$name=\"$var\"" >> "$directory_name/gentoo_variables"
 	done
 
 	print_step "Done!"
@@ -111,24 +115,30 @@ function gentoo_mount
 #Chroot with all necessary directories mounted
 function gentoo_chroot
 {
-	gentoo_mount;
+	load_variables;
 
+	gentoo_mount;
+	print_step "Mounting /proc /dev and /sys to in $CHROOT_DIR"
 	mount -t proc none $CHROOT_DIR/proc;
 	mount -o bind /dev $CHROOT_DIR/dev;
 	mount -o bind /sys $CHROOT_DIR/sys;
 	CHROOT_COMMAND=${1:-"/bin/bash"}
-	chroot $CHROOT_DIR $CHROOT_COMMAND
+	print_step "Chrooting into $CHROOT_DIR"
+	chroot "$CHROOT_DIR" "$CHROOT_COMMAND"
 }
 
 
 #It is very important that if there is any way the variables can be validated it would help the user to trouble the issue quicker
 function test_variables
 {
+	return;
+
 	#Test Network
 	echo -n  "Testing Network"
 	ping -c 3 "www.google.com" > /dev/null # try 3 pings and redirect output to /dev/null
 	if [ $? -eq 0 ]; then 
 		#works	
+		print_success_or_failure 0;
 	fi
 
 
@@ -137,6 +147,7 @@ function test_variables
 	ping -c 3 $STAGE3_URL > /dev/null # try 3 pings and redirect output to /dev/null
 	if [ $? -eq 0 ]; then 
 		#Works
+		print_success_or_failure 0;
 	fi
 
 	#Test Portage
@@ -144,6 +155,7 @@ function test_variables
 	ping -c 3 $STAGE3_URL > /dev/null # try 3 pings and redirect output to /dev/null
 	if [ $? -eq 0 ]; then 
 		#Works
+		print_success_or_failure 0;
 	fi
 
 	#Test Time
@@ -151,25 +163,27 @@ function test_variables
 	#Test function
 	if [ $? -eq 0 ]; then 
 		#Works
+		print_success_or_failure 0;
 	fi
 
-	#gentoo_variables exists
-	echo -n "Gentoo variables exists "
+	#Gentoo eselect
+	echo -n "Gentoo commend eselect"
 	#Test function
+	eselect profile list
 	if [ $? -eq 0 ]; then 
 		#Works	
+		print_success_or_failure 0;
 	fi
 }
 
 #Load Variables, all generated from the questions. Includes both architecture and feature commands
 function load_variables
 {
-	if [ -r /gentoo_variables ];then
+	if [ -r "$directory_name/gentoo_variables" ];then
 		print_step "Gentoo variables loaded"
-		source /gentoo_variables
+		source "$directory_name/gentoo_variables"
 	else
-		print_success_or_failure $?;
-		echo "Gentoo Variables to not exist!"
+		ask_questions; #Because you have too!@@@1
 	fi
 
 	test_variables;
@@ -187,15 +201,15 @@ function setup_arch
 	#Try to detect arch, if not then give out a selection that are located in the arch directory
 	#Pick a computer architecture. The ones in grey are not supported
 	#GENTOO_MIRRORS="http://mirrors.cs.wmich.edu/gentoo http://chi-10g-1-mirror.fastsoft.net/pub/linux/gentoo/gentoo-distfiles/ http://gentoo.cites.uiuc.edu/pub/gentoo/"
-	$mirror="http://mirrors.cs.wmich.edu/gentoo/releases";
+	mirror="http://mirrors.cs.wmich.edu/gentoo/releases";
 	echo -e "x86, amd64, \033[1;30msparc, ppc, ppc64, alpha, hppa, mips, ia64, arm\033[1;0m"
 	read -p "Computer architecture (x86):" architecture;
 	architecture=${architecture:-"x86"}
 	case $architecture in
 		x86|i686)
-			STAGE3_URL="$mirror/x86/current-stage3/stage3-i686-20110602.tar.bz2";;
+			STAGE3_URL="$mirror/x86/current-stage3/stage3-i686-20110802.tar.bz2";;
 		amd64)
-			STAGE3_URL="$mirror/amd64/current-stage3/stage3-amd64-20110602.tar.bz2";;
+			STAGE3_URL="$mirror/amd64/current-stage3/stage3-amd64-20110802.tar.bz2";;
 		*)
 			echo "This architecture is not supported in this script yet. Please refer to http://www.gentoo.org/doc/en/handbook/. Your on your own";;
 	esac
@@ -203,14 +217,25 @@ function setup_arch
 
 }
 
+#Open all scripts in ./features/
 function setup_features
 {
-	source ./features/*
+	print_step "Loading features from the $directory_name"
+
+	SAVEIFS=$IFS
+	IFS=$(echo -en "\n\b") 
+	FILES="$directory_name/features/*"
+	for f in $FILES
+	do
+		source "$f"
+	done
+	# restore $IFS
+	IFS=$SAVEIFS
 }
 
 function ask_questions
 {
-	echo "Hello, $USERNAME, you are about to install Gentoo on this computer. Please make sure your partitions and file systems are set."
+	echo "Hello, $USER, you are about to install Gentoo on this computer. Please make sure your partitions and file systems are set."
 	echo "Ok I have a couple of questions before I install this for you"
 
 	#Date Correct
@@ -218,22 +243,24 @@ function ask_questions
 	date;
 	while true; do
 		read -p "Date correct?: " yn;
-		case $yn in
-			[Yy]* ) break;;
-			[Nn]* ) htpdate -ds "www.nga.mil" && date && read -p "Is the date and time correct? " yn;;
-			* ) echo "Please answer yes or no.";;
-		esac
+	case $yn in
+		[Yy]* ) break;;
+		[Nn]* ) htpdate -ds "www.nga.mil" && date && read -p "Is the date and time correct? " yn;;
+		* ) echo "Please answer yes or no.";;
+	esac
 
-		case $yn in
-			[Yy]* ) hwclock -w; break;;
-			[Nn]* ) read -p "Update the date using the date MMDDhhmmYYYY syntax (Month, Day, hour, minute and Year):" setdate; date $setdate;;
+	case $yn in
+		[Yy]* ) hwclock -w; break;;
+		[Nn]* ) read -p "Update the date using the date MMDDhhmmYYYY syntax (Month, Day, hour, minute and Year):" setdate; date $setdate;;
 			* ) echo "Please answer yes or no.";;
-		esac
+	esac
+
 	done
 
 	#Ask for chroot directory
 	read -e -p "Chroot directory (/mnt/gentoo):" CHROOT_DIR;
 	CHROOT_DIR=${CHROOT_DIR:-"/mnt/gentoo"}
+	mkdir -p $CHROOT_DIR;
 	cd $CHROOT_DIR; pwd;
 
 	#Ask for partitions to install Gentoo. If blank in it will just install in the chroot directory
@@ -287,7 +314,7 @@ function ask_questions
 			[1-9]|1[1-6])	echo $PROFILE;break;;
 		*)	echo "Need to be within 1-16";;
 	esac
-	done
+done
 
 
 
@@ -299,6 +326,11 @@ setup_features;
 
 #Save variables
 save_variables;
+
+#Print any necessary messages that might help
+echo -e "Make configs\n$MAKE_CONFIG\n"
+echo -e "Use Flags\n$USE_FLAGS\n"
+echo -e "Post Messages\n$POST_MESSAGE\n"
 }
 
 function run_variable
@@ -321,7 +353,6 @@ function run_variable
 function gentoo_pre_chroot
 {
 	load_variables;
-	test_variables;
 
 	#Create chroot directory and the boot directory in chroot
 	if [ ! -d $CHROOT_DIR ]; then
@@ -346,8 +377,8 @@ function gentoo_pre_chroot
 	wget $STAGE3_URL.DIGESTS;
 
 	#Checksum Stage3
-	print_step "Checksumming Stage3"
-	md5sum -c stage3-*.tar.bz2.DIGESTS > /dev/null; print_success_or_failure $?;
+	#print_step "Checksumming Stage3"
+	#md5sum -c stage3-*.tar.bz2.DIGESTS > /dev/null; print_success_or_failure $?;
 
 	#Unpack Stage 3
 	print_step "Unpacking Stage3"
@@ -361,7 +392,8 @@ function gentoo_pre_chroot
 	wget $PORTAGE_URL.md5sum;
 
 	#Checksum Portage
-	md5sum -c portage-latest.tar.bz2.md5sum > /dev/null; print_success_or_failure $?;
+	#print_step "Checksumming Portage"
+	#md5sum -c portage-latest.tar.bz2.md5sum > /dev/null; print_success_or_failure $?; Problem is md5sum with output errors if its good or not
 
 	#Unpack Portage
 	print_step "Unpacking Portage"
@@ -371,21 +403,28 @@ function gentoo_pre_chroot
 	cp -L /etc/resolv.conf $CHROOT_DIR/etc/
 
 	print_step "Copying script and variables to chroot directory"
-	cp -v `dirname $0`/`basename $0` $CHROOT_DIR/
-	cp -v /gentoo_variables $CHROOT_DIR/gentoo_variables
+	cp -rv  "$directory_name" "$CHROOT_DIR/"
+	##cp -v "$directory_name/gentoo_variables" "$CHROOT_DIR/gentoo_variables"
 
 	#Run pre_chroot variables
-	run_variable $PRE_CHROOT;
-
-	gentoo_chroot /`basename $0` "pre_install"
+	run_variable "$PRE_CHROOT";
+	
+	touch "$directory_name/chroot.lock" #Dunno if it really is a lock but its the only way I know if the script is in chroot or not.
+	gentoo_chroot "$directory_name/`basename $0`" "pre_install"
 }
 
 function gentoo_pre_install
 {
+	if [[ ! -e "chroot.lock" ]]; then
+		echo -e '\033[1;31mHey! Your not in chroot!! Bad things would have happened... Run step 1.'
+		exit 1;
+	}
+
 	print_step "--Pre Install--";
 	env-update && source /etc/profile
 	export PS1="(chroot) $PS1"
-	source /gentoo_variables
+	source "$directory_name/gentoo_variables"
+
 
 	#Set password for root
 	print_step "Setting password for root";
@@ -431,6 +470,7 @@ EOF
 	locale-gen
 
 	#Backup the /etc/conf.d/clock just incase in need for reference
+	print_step "Backing up the /etc/conf.d/clock to /etc/conf.d/clock.backup"
 	cp /etc/conf.d/clock /etc/conf.d/clock.backup
 	echo -e '
 	# /etc/conf.d/clock
@@ -449,10 +489,10 @@ EOF
 	echo "config_eth0=(\"dhcp\")" >> /etc/conf.d/net
 
 	print_step "emerge --sync --quiet (this should only be run once a day at most)"
-	time emerge --sync --quiet
+	#time emerge --sync --quiet
 
 	#Run pre_install
-	run_variable $PRE_INSTALL;
+	run_variable "$PRE_INSTALL";
 }
 
 function gentoo_emerge
@@ -471,10 +511,10 @@ function gentoo_emerge
 		rc-update add dbus default && \
 		rc-update add udev default && \
 		updatedb && \
-		run_variable $POST_INSTALL;
+		run_variable "$POST_INSTALL";
 
 	#Post reminders for the user to know about
-	echo -e $POST_MESSAGE
+	echo -e "$POST_MESSAGE"
 
 	#What is left
 	echo -e "1. Setup Kernel\n2. Edit fstab\n3. Setup GRUB if needed."
@@ -487,21 +527,29 @@ function gentoo_emerge
 ################################################################################
 ################################################################################
 
-echo -e "
-	(1) Stage 1 - Download packages\n
-	(2) Stage 2 - Configure Gentoo\n
-	(3) Stage 3 - Emerge, the long coffee break\n
-	(4) Chroot\n
-	(5) Configure Gentoo :)\n
-	(6) Install Gentoo\n\n";
+load_variables;
 
+echo -e "
+(1) Step 1 - Configure Gentoo\n
+(2) Step 2 - Download packages\n
+(3) Step 3 - Configure Gentoo\n
+(4) Step 4 - Emerge, the long coffee break\n
+(5) Install Gentoo, Step 2,3, and 4\n
+(6) Chroot\n";
+
+
+if [ ! -n "$1" ]; then
+	read -p " #" choice
+else
+	choice=$1;
+fi
 
 case $choice in
-	1)gentoo_pre_chroot;;
-	2)gentoo_pre_install;;
-	3)gentoo_emerge;;
-	4)gentoo_chroot;;
-	5)ask_questions;;
-	6)gentoo_pre_chroot && gentoo_pre_install && gentoo_emerge;;
+	1)ask_questions;;
+	2)gentoo_pre_chroot;;
+	3)gentoo_pre_install;;
+	4)gentoo_emerge;;
+	5)gentoo_pre_chroot && gentoo_pre_install && gentoo_emerge;;
+	6)gentoo_chroot;;
 esac
 
