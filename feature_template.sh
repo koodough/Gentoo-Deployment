@@ -14,6 +14,10 @@ function print_step
 
 function save_variables
 {	
+	#Done right now.
+	# 2 arrays one for variables and the other gentoo_commander paste to scipt and your done!
+
+
 	var_name=(
 	pre_chroot
 	pre_install
@@ -44,7 +48,7 @@ function save_variables
 	echo "Pick a Gentoo article and collect all the necessary changes (mostly bash commands) to make this feature work."
 	echo "All of those changes/bash commands can be place in ALL 9 parameters. Cool huh. However it is your job to concatenate the commands together."
 	echo -e "\033[32mExample\033[35m echo \\\"exec ck-launch-session gnome-session\\\" > /root/.xinitrc \033[31m&&\033[1;0m"
-	echo -e "Skip any that don't apply to the script and enclose all commands in \033[31mquotes\033[0m\n\n"
+	echo -e "Skip any that don't apply to the script\n\n"
 
 	echo -e "Filename for the feature. \033[32mExample\033[35m distcc.sh\033[0m"
 	read -p "Filename:" filename;
@@ -68,7 +72,7 @@ function save_variables
 	read -p "gentoo_commander use_flags " use_flags;
 
 	echo -e "\npost_install is for any commands that need to run after packages are emerged for the feature"
-	read -p "gentoo_commander post_install" post_install;
+	read -p "gentoo_commander post_install " post_install;
 
 	echo -e "\npost_message is to alert the user in order to use the feature"
 	read -p "gentoo_commander post_message " post_message;
