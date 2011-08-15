@@ -14,7 +14,7 @@ DIR="$( cd "$( dirname "$0" )" && pwd )"
 scp -r "$DIR" "$ok:/";
 
 #Copy SSH id_rsa.pub to authorized keys for a Passwordless login
-cat ~/.ssh/id_rsa.pub | ssh $ok 'cat >> ~/.ssh/authorized_keys'
+#cat ~/.ssh/id_rsa.pub | ssh $ok 'cat >> ~/.ssh/authorized_keys'
 
 
 #Set some lose permission for the bash script to run
