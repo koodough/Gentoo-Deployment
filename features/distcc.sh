@@ -2,6 +2,11 @@
 # Distcc
 # Installs Distcc before all the packages are installed in emerge so that the computer can share it works off to other distcc servers.
 #Set CHOST
+
+### HEY!!!
+# Distcc needs permission to access /dev/null
+
+
 case $architecture in
 		x86|i686)
 			CHOST="i686-pc-linux-gnu";;

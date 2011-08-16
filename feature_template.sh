@@ -1,8 +1,9 @@
 #!/bin/bash
 
-#Feature Template
-# This script will prompt for all the necessary information that completes a feature 
+# Feature Template
 # This script will ask you all the questions to build a feature. Which one can easily look at the gentoo documentation and copy the information to answer the questions.
+# A simple script this one is, so you might have to roll up your sleeves and write some bash code to add any questions the user might need to enter and any case statements.
+# Look in the features folder for references.
 
 
 directory_name="$( cd "$( dirname "$0" )" && pwd )"
@@ -49,16 +50,13 @@ function save_variables
 	print_step "Done!"
 }
 
-
-
-
 	echo -e "\n\033[32mFeature Template Script\033[0m - Create bash scripts which can be executed by the gentoo_commander function in gentoo_deployment.sh script\n\n"
 
 	echo "This script is a questionnaire for fulfilling most of the features describe on gentoo.org. There is 9 easy parameters (currently) for what commands should execute and what messages to echo to the user for attention."
 	echo "Pick a Gentoo article and collect all the necessary changes (mostly bash commands) to make this feature work."
 	echo "All of those changes/bash commands can be place in ALL 9 parameters. Cool huh. However it is your job to concatenate the commands together."
 	echo -e "\033[32mExample\033[34m echo \\\"exec ck-launch-session gnome-session\\\" > /root/.xinitrc \033[31m&&\033[1;0m"
-	echo -e "Skip any that don't apply to the script\n\n"
+	echo -e "Notice: Skip any that don't apply to the feature and encapsulate in \033[31mquotes\033[0m.\n\n"
 
 	echo -e "Filename for the feature. \033[32mExample\033[34m distcc.sh\033[0m"
 	read -p "Filename:" filename;
