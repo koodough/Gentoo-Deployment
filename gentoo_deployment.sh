@@ -207,17 +207,19 @@ function newest_stage
 	#mirror="$mirror/x86/current-stage3/stage3-i686-*.tar.bz2";
 
 	for (( i = 0; i < 30; i++ )); do
-		host=${mirror/"*"/"`date -d "$i day ago" +"%Y%m%d"`"}
+		stage3_date=$(date -d "$i day ago" +'%Y%m%d')
+		host=${mirror/"*"/$stage3_date}
 		curl -f --head $host &> /dev/null; 
 		if [[ $? -eq 0 ]]; then 
 			echo $host;
 			#STAGE3_URL=$host
 			return 0;
 		fi
+		#echo "404"
 	done
 	
 	echo "No stage found"
-	return -1;
+	return 1;
 }
 
 ###Ask Questions Here###
@@ -239,8 +241,9 @@ function setup_arch
 			echo "This architecture is not supported in this script yet. Please refer to http://www.gentoo.org/doc/en/handbook/";;
 	esac
 	STAGE3_URL=`newest_stage "$mirror/$stage3_filepath"`
+	print_step "Stage3 URL:$STAGE3_URL";
 	PORTAGE_URL="$mirror/snapshots/current/portage-latest.tar.bz2";
-
+	print_step "Portage URL:$PORTAGE_URL"
 }
 
 #Open all scripts in ./features/
@@ -444,7 +447,7 @@ function gentoo_pre_install
 	if [[ ! -e "chroot.lock" ]]; then
 		echo -e '\033[1;31mHey! Your not in chroot!! Bad things would have happened... Run step 1.'
 		exit 1;
-	}
+	fi	
 
 	print_step "--Pre Install--";
 	env-update && source /etc/profile
