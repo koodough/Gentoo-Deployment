@@ -199,6 +199,27 @@ function load_variables
 	fi
 }
 
+#Find the newest stage from the mirror. Could find any better way, because gentoo won't have a stage3_latest link so the script pings the server until it find the lastest portage. Not happy about this GRRR!!!! ME MADDD BLARGH!
+function newest_stage
+{
+	mirror=$1
+	#mirror="http://mirrors.cs.wmich.edu/gentoo/releases";
+	#mirror="$mirror/x86/current-stage3/stage3-i686-*.tar.bz2";
+
+	for (( i = 0; i < 30; i++ )); do
+		host=${mirror/"*"/"`date -d "$i day ago" +"%Y%m%d"`"}
+		curl -f --head $host &> /dev/null; 
+		if [[ $? -eq 0 ]]; then 
+			echo $host;
+			#STAGE3_URL=$host
+			return 0;
+		fi
+	done
+	
+	echo "No stage found"
+	return -1;
+}
+
 ###Ask Questions Here###
 function setup_arch
 {
@@ -211,12 +232,13 @@ function setup_arch
 	architecture=${architecture:-"x86"}
 	case $architecture in
 		x86|i686)
-			STAGE3_URL="$mirror/x86/current-stage3/stage3-i686-20110802.tar.bz2";;
+			stage3_filepath="x86/current-stage3/stage3-i686-*.tar.bz2";;
 		amd64)
-			STAGE3_URL="$mirror/amd64/current-stage3/stage3-amd64-20110802.tar.bz2";;
+			stage3_filepath="amd64/current-stage3/stage3-amd64-*.tar.bz2";;
 		*)
-			echo "This architecture is not supported in this script yet. Please refer to http://www.gentoo.org/doc/en/handbook/. Your on your own";;
+			echo "This architecture is not supported in this script yet. Please refer to http://www.gentoo.org/doc/en/handbook/";;
 	esac
+	STAGE3_URL=`newest_stage "$mirror/$stage3_filepath"`
 	PORTAGE_URL="$mirror/snapshots/current/portage-latest.tar.bz2";
 
 }
@@ -432,6 +454,7 @@ function gentoo_pre_install
 
 	#Set password for root
 	print_step "Setting password for root";
+#NO SPACES OR TAB MARGINS
 passwd <<EOF
 "${root_password}"
 "${root_password}"
@@ -440,6 +463,7 @@ EOF
 	print_step "Creating user $USERNAME"
 	useradd -m -G users,wheel,audio,cdrom,cdrw,floppy,video -s /bin/bash $USERNAME
 	print_step "Setting password for $USERNAME"
+#NO SPACES OR TAB MARGINS
 passwd $USERNAME <<EOF
 "${user_password}"
 "${user_password}"
