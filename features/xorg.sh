@@ -27,6 +27,8 @@ while true; do
 		gentoo_commander use_flags "-qt4 -kde X dbus gtk gnome";
 		gentoo_commander post_message "Gnome: Use flags for your make.conf -qt4 -kde X dbus gtk gnome";
 		break;;
+		#Xmonad
+		[Xx]*) 	PACKAGES="$PACKAGES $STANDARD_PACKAGES $DESKTOP_PACKAGES xmonad-contrib"; break;;
 		#None
 		[Nn]* ) PACKAGES="$PACKAGES $STANDARD_PACKAGES;"; break;;
 		* ) echo "Please choose one!";;

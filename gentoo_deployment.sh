@@ -51,6 +51,7 @@ function gentoo_commander
 
 	#DEBUG
 	#echo "$command"
+	
 
 	case "$when" in
 		"make_config")	MAKE_CONFIG="$MAKE_CONFIG $command \n";;
@@ -58,7 +59,7 @@ function gentoo_commander
 		"pre_chroot")	PRE_CHROOT="$PRE_CHROOT && $command";;
 		"pre_install")	PRE_INSTALL="$PRE_INSTALL && $command";;
 		"post_install")	POST_INSTALL="$POST_INSTALL && $command";;
-		"post_message")	POST_MESSAGE="$command \n `print_step $POST_MESSAGE`";;
+		"post_message")	POST_MESSAGE="`print_step $command`\n$POST_MESSAGE";;
 	esac
 }
 

@@ -1,5 +1,5 @@
 #!/bin/bash
-#Root Tree feacture will install the files in the root tree packages onto your new gentoo install
+#Root Tree feature will install the files in the root tree packages onto your new gentoo install
 
 while true; do
 	read -p "Would you like to use a root tree package? (No)" yn;
@@ -7,7 +7,7 @@ while true; do
 		[Yy]* ) read -e -p "Path to your root tree archive (/root_dir): " ROOT_TREE_DIRECTORY
 			ROOT_TREE_DIRECTORY=${ROOT_TREE_DIRECTORY:-"/root_dir"}
 			OPTIND=1
-			source "./gentoo_root_tree_config.sh \"${ROOT_TREE_DIRECTORY%%.*}.tar.gz\" \"$CHROOT_DIR/\""
+			source "../gentoo_root_tree_config.sh \"${ROOT_TREE_DIRECTORY%%.*}.tar.gz\" \"$CHROOT_DIR/\""
 			#gentoo_commander pre_chroot "cp -v \"${ROOT_TREE_DIRECTORY%%.*}.tar.gz\" \"$CHROOT_DIR\"";
 			#gentoo_commander pre_install "tar xzfpv \"${ROOT_TREE_DIRECTORY%%.*}.tar.gz\" -C \"/\"";
 			break;;						
