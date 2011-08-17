@@ -7,7 +7,7 @@
 PACKAGES="$PACKAGES sys-power/acpid hibernate-script"
 
 
-read -p "Installing on a laptop? (no)" laptop;
+read -p "Installing on a laptop? (No)" laptop;
 
 	case $laptop in
 		[yY]*) PACKAGES="$PACKAGES sys-power/acpitool laptop-mode-tools";;

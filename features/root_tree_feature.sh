@@ -7,7 +7,7 @@ while true; do
 		[Yy]* ) read -e -p "Path to your root tree archive (/root_dir): " ROOT_TREE_DIRECTORY
 			ROOT_TREE_DIRECTORY=${ROOT_TREE_DIRECTORY:-"/root_dir"}
 			OPTIND=1
-			source "./gentoo_root_tree_config.sh \"${ROOT_TREE_DIRECTORY%%.*}.tar.gz\" \"$CHROOT_DIR\""
+			source "./gentoo_root_tree_config.sh \"${ROOT_TREE_DIRECTORY%%.*}.tar.gz\" \"$CHROOT_DIR/\""
 			#gentoo_commander pre_chroot "cp -v \"${ROOT_TREE_DIRECTORY%%.*}.tar.gz\" \"$CHROOT_DIR\"";
 			#gentoo_commander pre_install "tar xzfpv \"${ROOT_TREE_DIRECTORY%%.*}.tar.gz\" -C \"/\"";
 			break;;						
