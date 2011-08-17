@@ -13,6 +13,6 @@ APPEND_OPTS=" -auxbase -O2 -pipe -fomit-frame-pointer -mno-tls-direct-seg-refs"
 OPTIMIZATIONS="$GEN_OPTS $APPEND_OPTS"
 
  
-gentoo_commander pre_install "echo -e \"\n\n#CFLAGS equivalent to -march=native\""
+gentoo_commander pre_install "echo -e \"\n\n#CFLAGS equivalent to -march=native\" >> /etc/make.conf"
 gentoo_commander pre_install "echo CFLAGS=\"$OPTIMIZATIONS\" >> /etc/make.conf"
 gentoo_commander post_message "NOTE: March native CFLAGS are appended to your /etc/make.conf, overriding your previous CFLAGS"

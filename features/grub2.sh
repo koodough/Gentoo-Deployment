@@ -1,5 +1,6 @@
 #!/bin/bash
 #GRUB2
+#http://en.gentoo-wiki.com/wiki/Grub2
 
 PACKAGES="$PACKAGES sys-boot/grub sys-boot/os-prober";
 gentoo_commander pre_install "echo -e \"#Grub2\\n<sys-boot/grub-9999 **\\nsys-boot/os-prober\" >> /etc/portage/package.keywords"

@@ -1,7 +1,7 @@
 #!/bin/bash
 #Pulseaudio
 
-PACKAGES="$PACKAGES pulseaudio media-plugins/gst-plugins-pulse libflashsupport media-plugins/alsa-plugins"
+PACKAGES="$PACKAGES pulseaudio media-plugins/gst-plugins-pulse libflashsupport media-plugins/alsa-plugins pavucontrol paprefs"
 
 gentoo_commander use_flags "pulseaudio"
 gentoo_commander post_install "gpasswd -a $USERNAME pulse"

@@ -35,7 +35,7 @@ function save_variables
 	#Just Writing a bash file, which then can be executed by gentoo_deployment.sh, if it in the features folder
 	print_step "Creating $filename file"
 	print_step "Saving commands in $directory_name/features/$filename"
-	echo -e "#!/bin/bash\n\n# $filename\n# $description\n\n\n" > "$directory_name/features/$filename"
+	echo -e "#!/bin/bash\n\n# $filename\n# $description\n$URL\n\n" > "$directory_name/features/$filename"
 
 	for name in ${variables_array[@]}; do
 		var=`eval echo $\`echo $name\``
@@ -64,7 +64,8 @@ function save_variables
 	echo -e "Description for what the feature provides and where to find out more about it"
 	read -p "Description:" description;
 
-	
+	echo -e "URL of the article your are copying for a feature. \033[32mExample\033[34m http://www.gentoo.org/doc/en/power-management-guide.xml \033[0m" 	
+	read -p "URL:" URL;
 
 	echo -e "\nCommand string of anything that needs to be run before chrooting into a fresh Gentoo install"
 	read -p "gentoo_commander pre_chroot " pre_chroot;
