@@ -537,8 +537,8 @@ function gentoo_emerge
 	print_step "emerge -uDvN --noreplace system && emerge -uDvN --keep-going --noreplace world"
 	time emerge -uDvN --noreplace system && \
 		time emerge -uDvN --keep-going --noreplace world && \
-		print_step "emerge --keep-going $PACKAGES" && \
-		time emerge --keep-going $PACKAGES && \
+		print_step "emerge --keep-going --noreplace $PACKAGES" && \
+		time emerge --keep-going --noreplace $PACKAGES && \
 		rc-update add syslog-ng default && \
 		rc-update add vixie-cron default && \
 		rc-update add sshd default && \
