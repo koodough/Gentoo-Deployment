@@ -472,8 +472,8 @@ EOF
 	print_step "Setting password for $USERNAME"
 #NO SPACES OR TAB MARGINS
 passwd $USERNAME <<EOF
-"${user_password}"
-"${user_password}"
+${user_password}
+${user_password}
 EOF
 
 	#Hostname for the computer
