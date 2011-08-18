@@ -128,6 +128,10 @@ function gentoo_chroot
 	mount -o bind /dev $CHROOT_DIR/dev;
 	mount -o bind /sys $CHROOT_DIR/sys;
 	CHROOT_COMMAND=${1:-"/bin/bash"}
+	
+	print_step "Placing chroot.lock in $CHROOT_DIR$directory_name"
+	touch "$CHROOT_DIR$directory_name/chroot.lock" #Dunno if it really is a lock but its the only way I know if the script is in chroot or not.
+	
 	print_step "Chrooting into $CHROOT_DIR"
 	chroot "$CHROOT_DIR" "$CHROOT_COMMAND"
 }
@@ -439,7 +443,6 @@ function gentoo_pre_chroot
 	#Run pre_chroot variables
 	run_variable "$PRE_CHROOT";
 	
-	touch "$directory_name/chroot.lock" #Dunno if it really is a lock but its the only way I know if the script is in chroot or not.
 	gentoo_chroot "$directory_name/`basename $0`" "pre_install"
 }
 
@@ -531,9 +534,9 @@ function gentoo_emerge
 {
 	env-update && source /etc/profile
 
-	print_step "emerge -uDvN system && emerge -uDvN --keep-going world"
-	time emerge -uDvN system && \
-		time emerge -uDvN --keep-going world && \
+	print_step "emerge -uDvN --noreplace system && emerge -uDvN --keep-going --noreplace world"
+	time emerge -uDvN --noreplace system && \
+		time emerge -uDvN --keep-going --noreplace world && \
 		print_step "emerge --keep-going $PACKAGES" && \
 		time emerge --keep-going $PACKAGES && \
 		rc-update add syslog-ng default && \
