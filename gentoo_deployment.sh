@@ -39,6 +39,13 @@ POST_INSTALL="echo"
 MAKE_CONFIG=""
 POST_MESSAGE=""
 
+
+
+#gentoo_commander is the star for this Gentoo Deployment to work.
+#If your making a feature script this treat gentoo_commander like eval
+#Your Command NEEDS to be in QUOTES as well ESCAPED inside the STRING, that ALL.
+#Example: gentoo_commander pre_install "echo \"exec ratpoison\" > /home/$USER/.xinitrc";
+#Example 2: gentoo_commander pre_install "echo -e \"[Desktop Entry] \\\nType=Application \\\nVersion=1.3.3.7 \\\nEncoding=UTF-8\\\nName=Ratpoison\\\nComment=Minimalistic Window Manager\\\nExec=ratpoison\" > /usr/share/xsessions/ratpoison.desktop\""
 function gentoo_commander
 {
 	#Could be any string in the case list
@@ -509,7 +516,7 @@ EOF
 	cp /etc/conf.d/clock /etc/conf.d/clock.backup
 	echo -e '
 	# /etc/conf.d/clock
-	CLOCK="local"
+	CLOCK="UTC"
 	TIMEZONE="'$LOCALTIME'"
 	CLOCK_SYSTOHC="no"
 	SRM="no"
@@ -523,7 +530,7 @@ EOF
 	#Use DHCP
 	echo "config_eth0=(\"dhcp\")" >> /etc/conf.d/net
 
-	print_step "emerge --sync --quiet (this should only be run once a day at most)"
+	#print_step "emerge --sync --quiet (this should only be run once a day at most)"
 	#time emerge --sync --quiet
 
 	#Run pre_install
