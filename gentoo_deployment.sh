@@ -32,7 +32,7 @@ function print_success_or_failure
 
 }
 
-
+#ACKNOWLEDGE_MESSAGE=""
 PRE_CHROOT="echo"
 PRE_INSTALL="echo"
 POST_INSTALL="echo"
