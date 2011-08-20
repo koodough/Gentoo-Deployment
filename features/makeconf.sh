@@ -21,5 +21,5 @@ OPTIMIZATIONS="$GEN_OPTS $APPEND_OPTS"
 
  
 gentoo_commander pre_install "echo -e \"\n\n#CFLAGS equivalent to -march=native\" >> /etc/make.conf"
-gentoo_commander pre_install "echo CFLAGS=\\\"\${CFLAGS} $OPTIMIZATIONS\\\" >> /etc/make.conf"
+gentoo_commander pre_install "echo CFLAGS=\"\${CFLAGS} $OPTIMIZATIONS\" >> /etc/make.conf"
 gentoo_commander post_message "NOTE: March native CFLAGS are appended to your /etc/make.conf, appending your previous CFLAGS"
