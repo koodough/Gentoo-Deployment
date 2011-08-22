@@ -241,12 +241,14 @@ function setup_arch
 	#Pick a computer architecture. The ones in grey are not supported
 	#GENTOO_MIRRORS="http://mirrors.cs.wmich.edu/gentoo http://chi-10g-1-mirror.fastsoft.net/pub/linux/gentoo/gentoo-distfiles/ http://gentoo.cites.uiuc.edu/pub/gentoo/"
 	mirror="http://mirrors.cs.wmich.edu/gentoo/releases";
-	echo -e "x86, amd64, \033[1;30msparc, ppc, ppc64, alpha, hppa, mips, ia64, arm\033[1;0m"
+	echo -e "x86, i486, amd64, \033[1;30msparc, ppc, ppc64, alpha, hppa, mips, ia64, arm\033[1;0m"
 	read -p "Computer architecture (x86):" architecture;
 	architecture=${architecture:-"x86"}
 	case $architecture in
 		x86|i686)
 			stage3_filepath="x86/current-stage3/stage3-i686-*.tar.bz2";;
+		4|i486)
+			stage3_filepath="x86/current-stage3/stage3-i486-*.tar.bz2";;
 		amd64)
 			stage3_filepath="amd64/current-stage3/stage3-amd64-*.tar.bz2";;
 		*)
