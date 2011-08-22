@@ -25,7 +25,7 @@ while true; do
 		# I really don't know why this works but the \\\n is the only way I could get the file to have returns.
 		gentoo_commander pre_install "echo -e \"#Gnome\\\nx11-themes/gnome-colors-themes\\\nx11-themes/gnome-colors-common\\\n\\\n\" >> /etc/portage/package.keywords";
 		gentoo_commander pre_install "echo -e \"#Adobe Flash\\\nwww-plugins/adobe-flash\\\n\\\n\" >> /etc/portage/package.keywords";
-		gentoo_commander use_flags "-qt4 -kde X dbus gtk gnome";
+		gentoo_commander use_flags "-qt4 -kde X dbus jpeg gtk gnome";
 		gentoo_commander post_message "Gnome: Use flags for your make.conf -qt4 -kde X dbus gtk gnome";
 		break;;
 		[Rr]* ) PACKAGES="$PACKAGES ratpoison"; 
@@ -47,7 +47,7 @@ done
 case $SYSTEM in
 	[Nn]* );;
 	* ) echo -e "\n\033[31m*\033[0m Make sure your have the \"VIDEO_CARDS\" \"INPUT_DEVICES\" set correctly in make.conf\n";
-		gentoo_commander post_message "\033[31m* * * * *\033[0m Make sure your have the VIDEO_CARDS INPUT_DEVICES set correctly in make.conf"
+		gentoo_commander post_message "\033[31m\* \* \* \* \*\033[0m Make sure your have the VIDEO_CARDS INPUT_DEVICES set correctly in make.conf"
 	PACKAGES="$PACKAGES $DESKTOP_PACKAGES xorg-drivers";;
 esac
 

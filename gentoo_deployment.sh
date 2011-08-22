@@ -36,7 +36,7 @@ function print_success_or_failure
 PRE_CHROOT="echo"
 PRE_INSTALL="echo"
 POST_INSTALL="echo"
-MAKE_CONFIG=""
+MAKE_CONFIG="\n\n"
 POST_MESSAGE=""
 
 
@@ -145,6 +145,7 @@ function gentoo_chroot
 
 
 #It is very important that if there is any way the variables can be validated it would help the user to trouble the issue quicker
+
 function test_variables
 {
 	return;
@@ -190,6 +191,15 @@ function test_variables
 		#Works	
 		print_success_or_failure 0;
 	fi
+
+	#Gentoo curl
+	echo -n "Gentoo commend curl"
+	#Test function
+	curl -f --head "http://google.com" &> /dev/null;
+	if [ ! $? -eq 0 ]; then 
+		echo "Install Curl"
+		print_success_or_failure 1;
+	fi
 }
 
 #Load Variables, all generated from the questions. Includes both architecture and feature commands
@@ -227,7 +237,8 @@ function newest_stage
 			#STAGE3_URL=$host
 			return 0;
 		fi
-		#echo "404"
+		#ONLY FOR DEBUGGING. will corrupt gentoo_variables
+		#echo "404 $host"
 	done
 	
 	echo "No stage found"
@@ -247,7 +258,7 @@ function setup_arch
 	case $architecture in
 		x86|i686)
 			stage3_filepath="x86/current-stage3/stage3-i686-*.tar.bz2";;
-		4|i486)
+		4|i486|i4*)
 			stage3_filepath="x86/current-stage3/stage3-i486-*.tar.bz2";;
 		amd64)
 			stage3_filepath="amd64/current-stage3/stage3-amd64-*.tar.bz2";;
@@ -367,6 +378,9 @@ setup_arch;
 #Setup Feature to be installed
 setup_features;
 
+#After all the features have been sourced add the use flags to MAKE_CONFIG
+gentoo_commander make_config "USE=\"$USE_FLAGS\""
+
 #Save variables
 save_variables;
 
@@ -451,6 +465,10 @@ function gentoo_pre_chroot
 
 	#Run pre_chroot variables
 	run_variable "$PRE_CHROOT";
+	
+	#Append to make.conf
+	gentoo_commander pre_chroot "echo -e \"$MAKE_CONFIG\" >> $CHROOT_DIR/etc/make.conf"
+
 	
 	gentoo_chroot "$directory_name/`basename $0`" "pre_install"
 }

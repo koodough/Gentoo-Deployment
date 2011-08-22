@@ -1,6 +1,10 @@
 TODO
 ####
-
+8/20/2011
+- Use the gentoo_commander use_flags and make.conf
+- Fix the Escaping of quotes
+- Finish the makeconf.sh to add all the necessary Variables set, so editing the make.conf is not required
+- Automatic Timezone
 
 
 File and Order Structure
@@ -88,14 +92,8 @@ ________________________________________________________________________________
 
 Soon
 * Replace htpdate with ntpdate
-* Add Compiz
-* Add Power Management
-* LVM support
-* Get the latest stage3
 * Guess what architecture the system is
 
-* Fix Distcc parsing for multiple IP addresses when entered by the user
-* Detect to see if the OS architecture can chroot. If it fails instruct to to do it properly 
 * Fix Grub and the tab, if that messes up DOOM will happen. Will never boot correctly until its deleted in mtab. Maybe just delete mtab once 
 
 
@@ -109,15 +107,9 @@ Later
 Version 4
 * Work on multiple architectures - x86, amd64, PPC, PPC64 using a skeleton commands for that arch
 * Ncurses support
-* Rewrite in Python?
 
 
-For Linuxraptor
-* Create the flags for the make.conf that would be equivalent to march=native
 
-####Thoughts
-Python
-Stack for the function. Have the script run while there still could be errors
 
 
 Root Tree
