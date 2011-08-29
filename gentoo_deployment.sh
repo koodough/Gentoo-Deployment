@@ -574,7 +574,12 @@ function gentoo_emerge
 		rc-update add dbus default && \
 		rc-update add udev default && \
 		updatedb && \
-		run_variable "$POST_INSTALL";
+}
+
+function gentoo_after_emerge
+{
+	#Eval the $POST_INSTALL and run and commands to be run for the feature to work.
+	run_variable "$POST_INSTALL";
 
 	#Post reminders for the user to know about
 	echo -e "$POST_MESSAGE"
@@ -597,8 +602,9 @@ echo -e "
 (2) Step 2 - Download packages\n
 (3) Step 3 - Configure Gentoo\n
 (4) Step 4 - Emerge, the long coffee break\n
-(5) Install Gentoo, Step 2,3, and 4\n
-(6) Chroot\n";
+(5) Step 5 - After emerge
+(6) Install Gentoo, Step 2,3,4,5\n
+(7) Chroot\n";
 
 
 if [ ! -n "$1" ]; then
@@ -612,7 +618,8 @@ case $choice in
 	2)gentoo_pre_chroot;;
 	3)gentoo_pre_install;;
 	4)gentoo_emerge;;
-	5)gentoo_pre_chroot && gentoo_pre_install && gentoo_emerge;;
-	6)gentoo_chroot;;
+	5)gentoo_after_emerge;;
+	6)gentoo_pre_chroot && gentoo_pre_install && gentoo_emerge && gentoo_after_emerge;;
+	7)gentoo_chroot;;
 esac
 
