@@ -16,7 +16,7 @@ APPEND_OPTS=" -auxbase -O2 -pipe -fomit-frame-pointer -mno-tls-direct-seg-refs"
 OPTIMIZATIONS="$GEN_OPTS $APPEND_OPTS"
 gentoo_commander make_config "#CFLAGS equivalent to -march=native"
 gentoo_commander make_config "CFLAGS=\"$OPTIMIZATIONS\""
-gentoo_commander make_config "CXXFLAGS=\"${CFLAGS}\""
+gentoo_commander make_config "CXXFLAGS=\"\${CFLAGS}\""
 gentoo_commander post_message "NOTE: March native CFLAGS are appended to your /etc/make.conf, appending your previous CFLAGS"
 
 
@@ -36,7 +36,7 @@ gentoo_commander make_config "CHOST=\"$CHOST\""
 #MAKEOPTS
 CPU=`ls -1 /sys/class/cpuid/ | wc -l`
 #Recommended settings are the number of CPUs used to compile emerge plus ones
-MAKEOPTS=$(($CPU + 1))
+MAKEOPTS="-j$(($CPU + 1))"
 gentoo_commander make_config "MAKEOPTS=\"$MAKEOPTS\""
 
 #INPUT_DEVICES for mouse, keyboard, and trackpad

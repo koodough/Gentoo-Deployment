@@ -467,7 +467,8 @@ function gentoo_pre_chroot
 	run_variable "$PRE_CHROOT";
 	
 	#Append to make.conf
-	gentoo_commander pre_chroot "echo -e \"$MAKE_CONFIG\" >> $CHROOT_DIR/etc/make.conf"
+	print_step "Appending customized make.conf to $CHROOT_DIR/etc/make.conf"
+	echo -e "$MAKE_CONFIG" >> "$CHROOT_DIR/etc/make.conf"
 
 	
 	gentoo_chroot "$directory_name/`basename $0`" "pre_install"
@@ -490,8 +491,8 @@ function gentoo_pre_install
 	print_step "Setting password for root";
 #NO SPACES OR TAB MARGINS
 passwd <<EOF
-"${root_password}"
-"${root_password}"
+${root_password}
+${root_password}
 EOF
 
 	print_step "Creating user $USERNAME"
