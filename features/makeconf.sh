@@ -58,5 +58,3 @@ gentoo_commander make_config "#VIDEO_CARDS=\"ati\""
 #Language. For now its english
 gentoo_commander make_config "LINGUAS=\"en\""
 
-
-

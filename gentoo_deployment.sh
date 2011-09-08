@@ -573,7 +573,7 @@ function gentoo_emerge
 		rc-update add gpm default && \
 		rc-update add dbus default && \
 		rc-update add udev default && \
-		updatedb && \
+		updatedb 
 }
 
 function gentoo_after_emerge
@@ -602,7 +602,7 @@ echo -e "
 (2) Step 2 - Download packages\n
 (3) Step 3 - Configure Gentoo\n
 (4) Step 4 - Emerge, the long coffee break\n
-(5) Step 5 - After emerge
+(5) Step 5 - After emerge\n
 (6) Install Gentoo, Step 2,3,4,5\n
 (7) Chroot\n";
 
