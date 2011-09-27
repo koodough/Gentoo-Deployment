@@ -32,6 +32,15 @@ function print_success_or_failure
 
 }
 
+trim()
+{
+    trimmed=$1
+    trimmed=${trimmed%% }
+    trimmed=${trimmed## }
+
+    echo $trimmed
+}
+
 #ACKNOWLEDGE_MESSAGE=""
 PRE_CHROOT="echo"
 PRE_INSTALL="echo"
@@ -562,18 +571,18 @@ function gentoo_emerge
 {
 	env-update && source /etc/profile
 
-	print_step "emerge -uDvN --noreplace system && emerge -uDvN --keep-going --noreplace world"
-	time emerge -uDvN --noreplace system && \
-		time emerge -uDvN --keep-going --noreplace world && \
-		print_step "emerge --keep-going --noreplace $PACKAGES" && \
-		time emerge --keep-going --noreplace $PACKAGES && \
-		rc-update add syslog-ng default && \
-		rc-update add vixie-cron default && \
-		rc-update add sshd default && \
-		rc-update add gpm default && \
-		rc-update add dbus default && \
-		rc-update add udev default && \
-		updatedb 
+	print_step "emerge -uDvN --noreplace system; emerge -uDvN --keep-going --noreplace world"
+	time emerge -uDvN --noreplace system;
+	time emerge -uDvN --keep-going --noreplace world;
+	print_step "emerge --keep-going --noreplace $PACKAGES";
+	time emerge --keep-going --noreplace $PACKAGES;
+	rc-update add syslog-ng default;
+	rc-update add vixie-cron default;
+	rc-update add sshd default;
+	rc-update add gpm default;
+	rc-update add dbus default;
+	rc-update add udev default;
+	updatedb 
 }
 
 function gentoo_after_emerge
