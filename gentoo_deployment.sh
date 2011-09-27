@@ -311,7 +311,9 @@ function ask_questions
 		[Nn]* ) htpdate -ds "www.nga.mil" && date && read -p "Is the date and time correct? " yn;;
 		* ) echo "Please answer yes or no.";;
 	esac
+	
 
+	#Need to ask UTC or Localtime
 	case $yn in
 		[Yy]* ) hwclock -w; break;;
 		[Nn]* ) read -p "Update the date using the date MMDDhhmmYYYY syntax (Month, Day, hour, minute and Year):" setdate; date $setdate;;
