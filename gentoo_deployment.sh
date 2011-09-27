@@ -79,6 +79,19 @@ function gentoo_commander
 	esac
 }
 
+#In the ask_questions function the default answer will be either what is provided in the array or what is set in gentoo_variables if that file exists
+function default_answer
+{
+	variable="$1"
+
+	if [[ -e "$directory_name/gentoo_variables" ]]; then
+		
+
+	fi
+
+}
+
+
 #Not the best way to enumerate all the variables needed
 function save_variables
 {	

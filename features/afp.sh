@@ -2,7 +2,7 @@
 #AFP
 
 PACKAGES="$PACKAGES net-fs/netatalk";
-gnetoo_commander post_install "mkdir -p /etc/netatalk"
+gentoo_commander post_install "mkdir -p /etc/netatalk"
 gentoo_commander post_install "echo -e \"
 \n AFPD_MAX_CLIENTS=50
 

@@ -9,17 +9,17 @@
 #UUID_ROOT variable set
 eval "UUID_ROOT=\"`blkid -o export $ROOT_PARTITION | head -1`\""
 
-eval "\"`blkid -o export $ROOT_PARTITION | tail -1`\""
+eval "`blkid -o export $ROOT_PARTITION | tail -1`"
 UUID_ROOT_FILESYSTEM=$TYPE
 
 #UUID_ROOT variable set
 eval "UUID_BOOT=\"`blkid -o export $BOOT_PARTITION | head -1`\""
 
-eval "\"`blkid -o export $BOOT_PARTITION | tail -1`\""
+eval "`blkid -o export $BOOT_PARTITION | tail -1`"
 UUID_BOOT_FILESYSTEM=$TYPE
 
 
-eval "echo \"`blkid -o export | grep swap`\""
+eval "`blkid -o export | grep swap`"
 SWAP_PARTITION=$TYPE
 
 #If there is a swap add it to the fstab
