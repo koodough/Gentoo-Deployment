@@ -4,6 +4,15 @@
 # March native is equivalent to all the flags to the CFLAGS produced. would use for compiling. This is terrific for using distcc because using march native WILL break distcc usage.
 # This script needs MAKEOPTS will the right number of threads recommended
 
+trim()
+{
+    trimmed=$1
+    trimmed=${trimmed%% }
+    trimmed=${trimmed## }
+
+    echo $trimmed
+}
+
 #CFLAGS
 echo 'int main(){return 0;}' > test.c 
 gcc -v -Q -march=native -O2 test.c -o test &> test.config 
@@ -12,7 +21,7 @@ GEN_OPTS=`cat test.config | awk '{ printf "%s", $0 }' | awk -Ftest.c '{ print $2
 rm test.config
 APPEND_OPTS=" -auxbase -O2 -pipe -fomit-frame-pointer -mno-tls-direct-seg-refs"
 OPTIMIZATIONS="$GEN_OPTS $APPEND_OPTS"
-OPTIMIZATIONS=trim("$OPTIMIZATIONS")
+OPTIMIZATIONS=trim "$OPTIMIZATIONS"
 gentoo_commander make_config "#CFLAGS equivalent to -march=native"
 gentoo_commander make_config "CFLAGS=\"$OPTIMIZATIONS\""
 gentoo_commander make_config "CXXFLAGS=\"\$\{CFLAGS\}\""
@@ -33,6 +42,7 @@ esac
 gentoo_commander make_config "CHOST=\"$CHOST\""
 
 #MAKEOPTS
+#Number of CPUs
 CPU=`ls -1 /sys/class/cpuid/ | wc -l`
 #Recommended settings are the number of CPUs used to compile emerge plus ones
 MAKEOPTS="-j$(($CPU + 1))"

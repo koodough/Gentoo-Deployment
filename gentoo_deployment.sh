@@ -32,14 +32,6 @@ function print_success_or_failure
 
 }
 
-trim()
-{
-    trimmed=$1
-    trimmed=${trimmed%% }
-    trimmed=${trimmed## }
-
-    echo $trimmed
-}
 
 #ACKNOWLEDGE_MESSAGE=""
 PRE_CHROOT="echo"
