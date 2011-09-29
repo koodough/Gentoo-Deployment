@@ -75,10 +75,8 @@ function gentoo_commander
 function default_answer
 {
 	variable="$1"
-
 	if [[ -e "$directory_name/gentoo_variables" ]]; then
-		
-
+		echo "Loaded Variables";		
 	fi
 
 }
