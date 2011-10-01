@@ -312,16 +312,9 @@ function ask_questions
 		* ) echo "Please answer yes or no.";;
 	esac
 	
-	#Need to ask UTC or Localtime
-	while true; do
-		read -p "Timezone (America/Chicago): " yn;
-	case $yn in
-		[Yy]* ) hwclock -w; break;;
-		[Nn]* ) read -p "Update the date using the date MMDDhhmmYYYY syntax (Month, Day, hour, minute and Year):" setdate; date $setdate;;
-			* ) ;;
-	esac
-
-	done
+	#Timezone
+	read -p "Timezone (America/Chicago): " yn;
+	timezone=${timezone:-"America/Chicago"};
 
 	#Ask for chroot directory
 	read -e -p "Chroot directory (/mnt/gentoo):" CHROOT_DIR;
@@ -379,8 +372,8 @@ function ask_questions
 		case $PROFILE in
 			[1-9]|1[1-6])	echo $PROFILE;break;;
 		*)	echo "Need to be within 1-16";;
-	esac
-done
+		esac
+	done
 
 
 
@@ -535,7 +528,7 @@ EOF
 	echo -e "#Examples\n#app-office/gnumeric\n#=app-office/gnumeric-1.2.13\n#http://www.gentoo.org/doc/en/handbook/handbook-x86.xml?part=3&chap=3\n\n\n" > /etc/portage/package.keywords
 
 	#Set localtime Example America/Chicago
-	cp /usr/share/zoneinfo/$LOCALTIME /etc/timezone
+	cp /usr/share/zoneinfo/$timezone /etc/timezone
 
 	#Backup the /etc/locale.gen just incase in need for reference
 	cp /etc/locale.gen /etc/locale.gen.backup
