@@ -160,52 +160,61 @@ function gentoo_chroot
 function test_variables
 {
 	#Test Network
-	echo -n  "Testing Network"
+	print_step "Testing Network"
 	ping -c 3 "www.google.com" > /dev/null # try 3 pings and redirect output to /dev/null
 	if [ $? -eq 0 ]; then 
 		#works	
 		print_success_or_failure 0;
+	else
+		echo "O NOZ GOOGLE NO WRK. Using a lolcat reference here to express to you that this machine can not connect to the internet."
+		print_success_or_failure 1;
 	fi
 
 
 	#Test Stage3
-	echo -n  "Testing Stage3 URL"
+	print_step "Testing Stage3 URL"
 	ping -c 3 $STAGE3_URL > /dev/null # try 3 pings and redirect output to /dev/null
-	if [ $? -eq 0 ]; then 
+	if [[ $? -eq 0 ]]; then 
 		#Works
 		print_success_or_failure 0;
+	else
+		echo "$STAGE3_URL cannot be pinged"
+		print_success_or_failure 1;
 	fi
 
 	#Test Portage
-	echo -n  "Testing Portage URL"
-	ping -c 3 $STAGE3_URL > /dev/null # try 3 pings and redirect output to /dev/null
+	print_step "Testing Portage URL"
+	ping -c 3 $PORTAGE_URL > /dev/null # try 3 pings and redirect output to /dev/null
 	if [ $? -eq 0 ]; then 
 		#Works
 		print_success_or_failure 0;
+	else
+		echo "$PORTAGE_URL cannot be pinged"
+		print_success_or_failure 1;
 	fi
+
 
 	#Test Time
-	echo -n "Testing Time"
-	#Test function
-	if [ $? -eq 0 ]; then 
-		#Works
-		print_success_or_failure 0;
-	fi
+	print_step "Time"
+	echo "Your time... `date`"
 
 	#Gentoo eselect
-	echo -n "Gentoo commend eselect"
+	print_step "Gentoo commend eselect"
 	#Test function
-	eselect profile list
+	eselect profile list > /dev/null
 	if [ $? -eq 0 ]; then 
 		#Works	
 		print_success_or_failure 0;
+	else
+		echo "A gentoo system is required to run the configuration. eselect not found"
+		print_success_or_failure 1;
 	fi
 
 	#Gentoo curl
-	echo -n "Gentoo commend curl"
+	print_step "Gentoo commend curl"
 	#Test function
 	curl -f --head "http://google.com" &> /dev/null;
-	if [ ! $? -eq 0 ]; then 
+	if [[ $? != 0 ]]; then 
 		echo "Install Curl"
 		print_success_or_failure 1;
 	fi
@@ -604,7 +613,8 @@ echo -e "
 (4) Step 4 - Emerge, the long coffee break\n
 (5) Step 5 - After emerge\n
 (6) Install Gentoo, Step 2,3,4,5\n
-(7) Chroot\n";
+(7) Chroot\n
+(8) Test Varibles\n";
 
 
 if [ ! -n "$1" ]; then
@@ -621,5 +631,6 @@ case $choice in
 	5)gentoo_after_emerge;;
 	6)gentoo_pre_chroot && gentoo_pre_install && gentoo_emerge && gentoo_after_emerge;;
 	7)gentoo_chroot;;
+	8)test_variables;;
 esac
 
