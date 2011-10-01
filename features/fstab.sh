@@ -13,7 +13,7 @@ eval "`blkid -o export $ROOT_PARTITION | tail -1`"
 UUID_ROOT_FILESYSTEM=$TYPE
 
 #There has to be a root /! Trees need roots and babies have them.
-$ROOT="$UUID_ROOT 	/ 		$UUID_ROOT_FILESYSTEM 	noatime         0 1"
+ROOT="$UUID_ROOT 	/ 		$UUID_ROOT_FILESYSTEM 	noatime         0 1"
 
 #UUID_BOOT variable set
 eval "UUID_BOOT=\"`blkid -o export $BOOT_PARTITION | head -1`\""
@@ -22,7 +22,7 @@ eval "`blkid -o export $BOOT_PARTITION | tail -1`"
 UUID_BOOT_FILESYSTEM=$TYPE
 
 if [[ -n "$UUID_BOOT" ]] ; then
-	$BOOT="$UUID_BOOT 	/boot 	$UUID_BOOT_FILESYSTEM 	noauto,noatime	1 2"
+	BOOT="$UUID_BOOT 	/boot 	$UUID_BOOT_FILESYSTEM 	noauto,noatime	1 2"
 fi
 
 eval "`blkid -o export | grep swap`"
