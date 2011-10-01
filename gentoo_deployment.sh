@@ -173,23 +173,22 @@ function test_variables
 
 	#Test Stage3
 	print_step "Testing Stage3 URL"
-	ping -c 3 $STAGE3_URL > /dev/null # try 3 pings and redirect output to /dev/null
+	curl -f --head "$STAGE3_URL" &> /dev/null
 	if [[ $? -eq 0 ]]; then 
 		#Works
 		print_success_or_failure 0;
 	else
-		echo "$STAGE3_URL cannot be pinged"
+		echo "Not able to reach $STAGE3_URL"
 		print_success_or_failure 1;
 	fi
 
 	#Test Portage
 	print_step "Testing Portage URL"
-	ping -c 3 $PORTAGE_URL > /dev/null # try 3 pings and redirect output to /dev/null
-	if [ $? -eq 0 ]; then 
-		#Works
+	curl -f --head "$PORTAGE_URL" &> /dev/null;
+	if [[ $? -eq 0 ]]; then 
 		print_success_or_failure 0;
 	else
-		echo "$PORTAGE_URL cannot be pinged"
+		echo "Not able to reach $PORTAGE_URL"
 		print_success_or_failure 1;
 	fi
 
@@ -214,7 +213,9 @@ function test_variables
 	print_step "Gentoo commend curl"
 	#Test function
 	curl -f --head "http://google.com" &> /dev/null;
-	if [[ $? != 0 ]]; then 
+	if [[ $? -eq 0 ]]; then 
+		print_success_or_failure 0;
+	else
 		echo "Install Curl"
 		print_success_or_failure 1;
 	fi
