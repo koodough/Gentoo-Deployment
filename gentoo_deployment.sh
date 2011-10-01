@@ -311,6 +311,7 @@ function ask_questions
 		[Nn]* ) htpdate -ds "www.nga.mil" && date && read -p "Is the date and time correct? " yn;;
 		* ) echo "Please answer yes or no.";;
 	esac
+	done
 	
 	#Timezone
 	read -p "Timezone (America/Chicago): " yn;
