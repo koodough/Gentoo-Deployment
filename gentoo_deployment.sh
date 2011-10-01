@@ -218,6 +218,7 @@ function test_variables
 		print_success_or_failure 1;
 	fi
 
+
 	echo -e "If all pasted then it should be smooth sailing until the emerge where you might right into compile errors, but that's just the nature of Gentoo.\nWhen in doubt refer to http://gentoo.org for answers\n\n"
 
 

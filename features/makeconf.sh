@@ -38,6 +38,8 @@ CPU=`ls -1 /sys/class/cpuid/ | wc -l`
 MAKEOPTS="-j$(($CPU + 1))"
 gentoo_commander make_config "MAKEOPTS=\"$MAKEOPTS\""
 
+#Parallel-fetch
+gentoo_commander make_config "FEATURES=\"${FEATURES} parallel-fetch\""
 #INPUT_DEVICES for mouse, keyboard, and trackpad
 gentoo_commander make_config "INPUT_DEVICES=\"evdev synaptics\""
 
