@@ -170,6 +170,16 @@ function test_variables
 		print_success_or_failure 1;
 	fi
 
+	#Gentoo curl
+	print_step "Gentoo command curl"
+	#Test function
+	curl -f --head "http://google.com" &> /dev/null;
+	if [[ $? -eq 0 ]]; then 
+		print_success_or_failure 0;
+	else
+		echo "Install Curl"
+		print_success_or_failure 1;
+	fi
 
 	#Test Stage3
 	print_step "Testing Stage3 URL"
@@ -192,13 +202,12 @@ function test_variables
 		print_success_or_failure 1;
 	fi
 
-
 	#Test Time
 	print_step "Time"
-	echo "Your time... `date`"
+	echo -e "Your time... `date`\n"
 
 	#Gentoo eselect
-	print_step "Gentoo commend eselect"
+	print_step "Gentoo command eselect"
 	#Test function
 	eselect profile list > /dev/null
 	if [ $? -eq 0 ]; then 
@@ -209,16 +218,9 @@ function test_variables
 		print_success_or_failure 1;
 	fi
 
-	#Gentoo curl
-	print_step "Gentoo commend curl"
-	#Test function
-	curl -f --head "http://google.com" &> /dev/null;
-	if [[ $? -eq 0 ]]; then 
-		print_success_or_failure 0;
-	else
-		echo "Install Curl"
-		print_success_or_failure 1;
-	fi
+	echo -e "If all pasted then it should be smooth sailing until the emerge where you might right into compile errors, but that's just the nature of Gentoo.\nWhen in doubt refer to http://gentoo.org for answers\n\n"
+
+
 }
 
 #Load Variables, all generated from the questions. Includes both architecture and feature commands
@@ -319,7 +321,7 @@ function ask_questions
 	case $yn in
 		[Yy]* ) break;;
 		[Nn]* ) htpdate -ds "www.nga.mil" && date && read -p "Is the date and time correct? " yn;;
-		* ) echo "Please answer yes or no.";;
+		* )  break;;
 	esac
 	done
 	
