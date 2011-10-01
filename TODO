@@ -1,11 +1,9 @@
 TODO
 ####
 8/20/2011
-- Use the gentoo_commander use_flags and make.conf
-- Fix the Escaping of quotes
-- Finish the makeconf.sh to add all the necessary Variables set, so editing the make.conf is not required
 - Automatic Timezone
-
+- Verify that automatic fstab works
+- Create a script to make the computer profiles portable by git. Shouldn't be more than 2 command prompts when updating or receiving. Use git to resolve conflict merges
 
 File and Order Structure
 

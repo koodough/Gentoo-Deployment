@@ -1,0 +1,32 @@
+# /etc/exports: NFS file systems being exported.  See exports(5).
+# one line like this for each slave
+#/diskless/10.0.1.93   		10.0.1.0/24(sync,rw,no_root_squash,no_all_squash,subtree_check)
+
+
+/tftpboot/diskless/10.0.1.91		10.0.1.9*(ro,sync,no_root_squash)
+/diskless/ubuntu-amd64			10.0.1.33(async,no_root_squash,no_subtree_check,ro)
+
+
+#/tftpboot/diskless/10.0.1.91   	10.0.1.91(sync,rw,no_root_squash,no_all_squash,subtree_check)
+#/tftpboot/diskless/10.0.1.91   	10.0.1.92(sync,rw,no_root_squash,no_all_squash,subtree_check)
+#/tftpboot/diskless/10.0.1.91   	10.0.1.93(sync,rw,no_root_squash,no_all_squash,subtree_check)
+#/tftpboot/diskless/10.0.1.91   	10.0.1.94(sync,rw,no_root_squash,no_all_squash,subtree_check)
+#/tftpboot/diskless/10.0.1.91   	10.0.1.95(sync,rw,no_root_squash,no_all_squash,subtree_check)
+#/tftpboot/diskless/10.0.1.91   	10.0.1.96(sync,rw,no_root_squash,no_all_squash,subtree_check)
+#/tftpboot/diskless/10.0.1.91   	10.0.1.97(sync,rw,no_root_squash,no_all_squash,subtree_check)
+#/tftpboot/diskless/10.0.1.91   	10.0.1.98(sync,rw,no_root_squash,no_all_squash,subtree_check)
+
+
+# common to all slaves
+#/bin				10.0.1.0/24(sync,ro,no_root_squash,no_all_squash,no_subtree_check)
+#/etc				10.0.1.0/24(sync,ro,no_root_squash,no_all_squash,no_subtree_check)
+#/lib				10.0.1.0/24(sync,ro,no_root_squash,no_all_squash,no_subtree_check)
+#/opt				10.0.1.0/24(sync,ro,no_root_squash,no_all_squash,no_subtree_check)
+#/sbin				10.0.1.0/24(sync,ro,no_root_squash,no_all_squash,no_subtree_check)
+#/usr				10.0.1.0/24(sync,ro,no_root_squash,no_all_squash,no_subtree_check)
+
+
+#/home  10.0.1.0/24(sync,rw,no_root_squash,no_all_squash)
+# if you want to have a shared log
+#/var/log   10.0.1.93(sync,rw,no_root_squash,no_all_squash)
+

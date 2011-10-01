@@ -1,0 +1,27 @@
+# /etc/fstab: static file system information.
+#
+# noatime turns off atimes for increased performance (atimes normally aren't 
+# needed; notail increases performance of ReiserFS (at the expense of storage 
+# efficiency).  It's safe to drop the noatime options if you want and to 
+# switch between notail / tail freely.
+#
+# The root filesystem should have a pass number of either 0 or 1.
+# All other filesystems should have a pass number of 0 or greater than 1.
+#
+# See the manpage fstab(5) for more information.
+#
+
+# <fs>			<mountpoint>	<type>		<opts>		<dump/pass>
+
+# NOTE: If your BOOT partition is ReiserFS, add the notail option to opts.
+UUID=85610b5f-78ce-4272-b166-c6aeaf92b03d		/boot		ext3		noauto,noatime	1 2
+UUID=382dfb86-e9f2-4fac-8b34-937b32ebb502		/		ext4		noatime		0 1
+#/dev/SWAP		none		swap		sw		0 0
+/dev/cdrom		/mnt/cdrom	auto		noauto,ro	0 0
+#/dev/fd0		/mnt/floppy	auto		noauto		0 0
+
+# glibc 2.2 and above expects tmpfs to be mounted at /dev/shm for 
+# POSIX shared memory (shm_open, shm_unlink).
+# (tmpfs is a dynamically expandable/shrinkable ramdisk, and will
+#  use almost no memory if not populated with files)
+shm			/dev/shm	tmpfs		nodev,nosuid,noexec	0 0

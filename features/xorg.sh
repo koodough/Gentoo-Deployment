@@ -47,7 +47,7 @@ done
 case $SYSTEM in
 	[Nn]* );;
 	* ) echo -e "\n\033[31m*\033[0m Make sure your have the \"VIDEO_CARDS\" \"INPUT_DEVICES\" set correctly in make.conf\n";
-		gentoo_commander post_message "\033[31m\* \* \* \* \*\033[0m Make sure your have the VIDEO_CARDS INPUT_DEVICES set correctly in make.conf"
+		gentoo_commander post_message "\033[31mMake sure your have the VIDEO_CARDS INPUT_DEVICES set correctly in make.conf\033[0m"
 	PACKAGES="$PACKAGES $DESKTOP_PACKAGES xorg-drivers";;
 esac
 

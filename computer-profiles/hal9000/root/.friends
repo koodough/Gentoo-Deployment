@@ -1,0 +1,12 @@
+alias lr='ssh root@linuxraptor.com -p 4433'
+alias linux='ssh root@linuxraptor.com -p 4433'
+alias screen='screen -xRRA'
+alias acer='ssh root@home.koodough.com -p 66'
+alias blue='ssh blue@home.koodough.com -p 33'
+alias xu='ssh root@home.koodough.com -p 220'
+
+function ssh-key {
+	echo "$@"
+	cat ~/.ssh/id_rsa.pub | ssh $@ 'cat >> ~/.ssh/authorized_keys'
+}
+

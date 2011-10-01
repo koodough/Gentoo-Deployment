@@ -64,9 +64,9 @@ function gentoo_commander
 	case "$when" in
 		"make_config")	MAKE_CONFIG="$MAKE_CONFIG $command \n";;
 		"use_flags")	USE_FLAGS="$USE_FLAGS $command ";;
-		"pre_chroot")	PRE_CHROOT="$PRE_CHROOT && $command";;
-		"pre_install")	PRE_INSTALL="$PRE_INSTALL && $command";;
-		"post_install")	POST_INSTALL="$POST_INSTALL && $command";;
+		"pre_chroot")	PRE_CHROOT="$PRE_CHROOT; $command";;
+		"pre_install")	PRE_INSTALL="$PRE_INSTALL; $command";;
+		"post_install")	POST_INSTALL="$POST_INSTALL; $command";;
 		"post_message")	POST_MESSAGE="`print_step $command`\n$POST_MESSAGE";;
 	esac
 }
@@ -78,7 +78,6 @@ function default_answer
 	if [[ -e "$directory_name/gentoo_variables" ]]; then
 		echo "Loaded Variables";		
 	fi
-
 }
 
 
@@ -160,8 +159,6 @@ function gentoo_chroot
 
 function test_variables
 {
-	return;
-
 	#Test Network
 	echo -n  "Testing Network"
 	ping -c 3 "www.google.com" > /dev/null # try 3 pings and redirect output to /dev/null
@@ -315,12 +312,13 @@ function ask_questions
 		* ) echo "Please answer yes or no.";;
 	esac
 	
-
 	#Need to ask UTC or Localtime
+	while true; do
+		read -p "Timezone (America/Chicago): " yn;
 	case $yn in
 		[Yy]* ) hwclock -w; break;;
 		[Nn]* ) read -p "Update the date using the date MMDDhhmmYYYY syntax (Month, Day, hour, minute and Year):" setdate; date $setdate;;
-			* ) echo "Please answer yes or no.";;
+			* ) ;;
 	esac
 
 	done
@@ -523,6 +521,8 @@ EOF
 	echo "HOSTNAME=\"$HOSTNAME\"" > /etc/conf.d/hostname
 	#DNS Domain for the computer
 	echo "dns_domain_lo=\"$HOSTNAME\"" >> /etc/conf.d/net
+	#Setting host name so the unknown_domain disappears
+	echo "127.0.0.1 $HOSTNAME" >> /etc/hosts
 
 	#System Profile
 	print_step "Setting system profile"
@@ -535,7 +535,7 @@ EOF
 	echo -e "#Examples\n#app-office/gnumeric\n#=app-office/gnumeric-1.2.13\n#http://www.gentoo.org/doc/en/handbook/handbook-x86.xml?part=3&chap=3\n\n\n" > /etc/portage/package.keywords
 
 	#Set localtime Example America/Chicago
-	cp /usr/share/zoneinfo/$LOCALTIME /etc/localtime
+	cp /usr/share/zoneinfo/$LOCALTIME /etc/timezone
 
 	#Backup the /etc/locale.gen just incase in need for reference
 	cp /etc/locale.gen /etc/locale.gen.backup
@@ -545,18 +545,6 @@ EOF
 	en_US.UTF-8 UTF-8
 	" > /etc/locale.gen
 	locale-gen
-
-	#Backup the /etc/conf.d/clock just incase in need for reference
-	print_step "Backing up the /etc/conf.d/clock to /etc/conf.d/clock.backup"
-	cp /etc/conf.d/clock /etc/conf.d/clock.backup
-	echo -e '
-	# /etc/conf.d/clock
-	CLOCK="UTC"
-	TIMEZONE="'$LOCALTIME'"
-	CLOCK_SYSTOHC="no"
-	SRM="no"
-	ARC="no"
-	' > /etc/conf.d/clock
 
 	#Setup eth0
 	ln -s /etc/init.d/net.lo /etc/init.d/net.eth0
@@ -576,18 +564,22 @@ function gentoo_emerge
 {
 	env-update && source /etc/profile
 
-	print_step "emerge -uDvN --noreplace system; emerge -uDvN --keep-going --noreplace world"
-	time emerge -uDvN --noreplace system;
-	time emerge -uDvN --keep-going --noreplace world;
-	print_step "emerge --keep-going --noreplace $PACKAGES";
-	time emerge --keep-going --noreplace $PACKAGES;
+	print_step "emerge -uDvNp --noreplace system; emerge -uDvNp --keep-going --noreplace world"
+	time emerge -uDvNp --noreplace system;
+	time emerge -uDvNp --keep-going --noreplace world;
+	print_step "emerge --keep-going --noreplace --autounmask-write $PACKAGES";
+	time emerge --keep-going --noreplace --autounmask-write $PACKAGES;
+	if [[ $? != 0 ]]; then
+		dispatch-conf;
+		time emerge --keep-going --noreplace --autounmask-write $PACKAGES;
+	fi
 	rc-update add syslog-ng default;
 	rc-update add vixie-cron default;
 	rc-update add sshd default;
 	rc-update add gpm default;
 	rc-update add dbus default;
 	rc-update add udev default;
-	updatedb 
+	updatedb;
 }
 
 function gentoo_after_emerge
