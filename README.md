@@ -1,21 +1,21 @@
-Gentoo Deployment Version 4.1
-by Koodough Katsu
+# Gentoo Deployment Version 4.1
+by Koodough
 
-###Objective###
+## Objective
 Install Gentoo on any computer with all the questions ask before the installation starts. 
 
 
-###TODO###
+## TODO
 Create ./features/kernel.sh to install a working kernel
 Better Debugging the progress of the Gentoo installation
 Ability to isolate features to either test or execute
 "install.sh" shouldn't copy the git repo to a target machine (not necessary to copy all those files)
 
-###Introduction###
+## Introduction
 
 Gentoo Deployment was only made to ease the installation of Gentoo by following through the official guides on gentoo.org. Although the script doesn't follow the guides line by line, it does a good job at least downloading the Stage3 and Portage tarball.
 
-###Usage###
+## Usage
 
 Gentoo Deployment, runs best in a Gentoo environment, so either SystemrescueCD (testing OS) or a Gentoo Live CD will work fine on the target computer.
 
@@ -33,7 +33,7 @@ Result: Gentoo Deployment folder should now by on your root folder on the target
 3. ./gentoo_deployment.sh
 4. Follow through the steps from the ./gentoo_deployment.sh prompt 
 
-###HELP!!!!###
+### HELP!!!!
 If your new to Gentoo, DON'T use this script. Rather follow the official documentation gentoo.org, trust me.
 
 If your encountering a bug, please email me at github@koodough.com or through the github website, user name is koodough.
