@@ -324,21 +324,22 @@ welcome_message;
 }
 function welcome_message
 {
-	echo -e "\n
-Gentoo Deployment Intro\n
-	./features - All the scripts in ./features will be executed during the installation of Gentoo. Add/remove the scripts to/from ./features
-	./disabled-features - A folder to disable scripts from being used in Gentoo Deployment\n
+	echo -e "
+\033[1;36mGentoo Deployment Intro\033[00m
 
-Current features selected to be installed...\n"
+	./features - All the scripts in ./features will be executed during the installation of Gentoo. Add/remove the scripts to/from ./features
+	./disabled-features - A folder to disable scripts from being used in Gentoo Deployment
+
+\033[1;36mCurrent features selected to be installed...\033[00m\n"
 
 	SAVEIFS=$IFS
 	IFS=$(echo -en "\n\b") 
 	FILES="$directory_name/features/*"
 	for f in $FILES
 	do
-		echo -e ${f##*/};
+		echo -e "\033[1;32m${f##*/} \033[00m";
 		cat "$f" | sed -n 3,3p;
-		echo -e "\n"
+		echo;
 	done
 	# restore $IFS
 	IFS=$SAVEIFS
