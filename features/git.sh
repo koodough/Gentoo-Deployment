@@ -16,41 +16,36 @@
 PACKAGES="$PACKAGES git"
 
 
-read -p "user.name: " $GITHUB_EMAIL;
-read -p "user.email: " $GITHUB_EMAIL;
+read -p "user.name: " $git_user;
+read -p "user.email: " $git_email;
+gentoo_commander post_install "git config --global user.name $git_user" 
+gentoo_commander post_install "git config --global user.email $git_email" 
 
 while true; do
-	read -p "Use a Github account? (no): " yn;
+	read -p "Setup a Git for Github? (no): " yn;
 	case $yn in
 		[Yy]*)	
 
+			#Don't overwrite any ssh keys
+			#If the keys exists then copy to key_backup_(date)
+			cd /home/$USERNAME/.ssh/
+			if [[ -f /home/$USERNAME/.ssh/id_rsa ]]; then
+				cp id_rsa* "key_backup_`date +%m-%d-%Y`" #&& rm id_rsa*;
+				gentoo_commander post_message "Backed up ssh keys into /home/$USERNAME/.ssh/key_backup_`date +%m-%d-%Y`"
+			fi
+
 			read -p "Global github.user: " $github_user;
 			read -p "Global github.token: " $github_token;
-			gentoo_commander post_install "git config --global user.name $github_user" 
-			gentoo_commander post_install "git config --global user.name $github_token" 
+			read -p "Github email: " $github_email;
+			gentoo_commander post_install "git config --global github.user $github_user" 
+			gentoo_commander post_install "git config --global github.token $github_token" 
+			gentoo_commander post_install "ssh-keygen -t rsa -C $github_email"
+			gentoo_commander post_install "ssh -T git@github.com"
 			
+
 			break;;
 		#[Nn]*)break;;
 		#*)	break;;
 	esac
 done
 
-read -p "Email address for Github: " $GITHUB_EMAIL;
-read -p "Email address for Github: " $GITHUB_EMAIL;
-
-#Git
-git config --global user.name "Firstname Lastname"
-git config --global user.email "your_email@youremail.com"
-
-#Github
-git config --global github.user username
-git config --global github.token 0123456789yourf0123456789token
-
-#Don't overwrite any ssh keys
-#If the keys exists then copy to key_backup_(date)
-cd /home/$USERNAME/.ssh/
-if [[ -f /home/$USERNAME/.ssh/id_rsa ]]; then
-	cp id_rsa* "key_backup_`date +%m-%d-%Y`" && rm id_rsa*;
-fi
-
-ssh-keygen -t rsa -C "your_email@youremail.com"
