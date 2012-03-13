@@ -1,5 +1,6 @@
 #!/bin/bash
 #AFP
+#Apple File Server
 
 PACKAGES="$PACKAGES net-fs/netatalk";
 gentoo_commander post_install "mkdir -p /etc/netatalk"

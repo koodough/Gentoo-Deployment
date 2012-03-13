@@ -1,5 +1,6 @@
 #!/bin/bash
 #Xorg
+#Installs Xorg with the choice of Gnome or Xmonad
 
 #++Type of system++#
 STANDARD_PACKAGES="syslog-ng app-admin/sysstat vixie-cron mlocate dhcpcd pciutils hwinfo app-misc/screen sudo eix gentoolkit lafilefixer app-arch/lzop net-misc/openssh net-misc/openssh-blacklist gpm htop powertop latencytop net-misc/htpdate sys-power/acpid"
@@ -38,7 +39,7 @@ while true; do
 		#Xmonad
 		[Xx]*) 	PACKAGES="$PACKAGES xmonad-contrib"; break;;
 		#None
-		[Nn]* ) break;;#Okay :_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:
+		[Nn]* ) break;; #Okay :_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:_\|/_:
 		* ) echo "Please choose one!";;
 	esac
 done

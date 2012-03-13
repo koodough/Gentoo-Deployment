@@ -1,8 +1,8 @@
 #!/bin/bash
 #Power Management
 #ACPI, screen-saver
-#Does have cpu temp in the kernel help power management??
 #http://www.gentoo.org/doc/en/power-management-guide.xml
+#Does have cpu temp in the kernel help power management??
 
 PACKAGES="$PACKAGES sys-power/acpid hibernate-script"
 

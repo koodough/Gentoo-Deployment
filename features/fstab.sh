@@ -1,7 +1,6 @@
 #!/bin/bash
-
 # fstab.sh
-# Overwrites the /etc/fstab with one that works. This would be part of the gentoo_deployment, but I'm not too sure about the reliability of the script
+# Overwrites the /etc/fstab with one that works.
 # http://www.gentoo.org/doc/en/handbook/handbook-x86.xml?part=1&chap=8
 # https://wiki.archlinux.org/index.php/Fstab
 

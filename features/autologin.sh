@@ -1,5 +1,6 @@
 #!/bin/bash
 #Autologin
+#Automatic login in bash on OS boot up
 
 gentoo_commander pre_install "
 echo -e \"

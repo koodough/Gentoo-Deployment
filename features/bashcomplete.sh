@@ -1,5 +1,6 @@
 #!/bin/bash
-#Bash Complete
+# Bash Complete
+# Bash complete for ssh sh screen mount nmap util-linux man make bash-builtins gentoo iptables lvm tar tcpdump service base findutils;
 
 PACKAGES="$PACKAGES bash-completion";
 gentoo_commander use_flags "bash-completion";

@@ -1,15 +1,7 @@
 #!/bin/bash
-
 # github.sh
 # Will emerge and setup git's basic preferences
 #http://en.gentoo-wiki.com/wiki/Git 
-
-#Ask for username
-
-#Ask for email
-
-#Ask for git color
-
 #http://help.github.com/linux-set-up-git/
 
 
@@ -20,6 +12,7 @@ read -p "user.name: " $git_user;
 read -p "user.email: " $git_email;
 gentoo_commander post_install "git config --global user.name $git_user" 
 gentoo_commander post_install "git config --global user.email $git_email" 
+gentoo_commander post_install "git config color.ui true" 
 
 while true; do
 	read -p "Setup a Git for Github? (no): " yn;

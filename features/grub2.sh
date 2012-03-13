@@ -1,5 +1,6 @@
 #!/bin/bash
 #GRUB2
+#Installs GRUB2
 #http://en.gentoo-wiki.com/wiki/Grub2
 
 PACKAGES="$PACKAGES sys-boot/grub:2 sys-boot/os-prober";

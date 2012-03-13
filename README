@@ -4,8 +4,6 @@ by Koodough Katsu
 ###Objective###
 Install Gentoo on any computer with all the questions ask before the installation starts. 
 
-###Current Status###
-Able to download, configure, and emerge packages for the most part 
 
 ###TODO###
 Create ./features/kernel.sh to install a working kernel

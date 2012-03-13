@@ -1,8 +1,6 @@
 #!/bin/bash
-
 # Makeconf
-# March native is equivalent to all the flags to the CFLAGS produced. would use for compiling. This is terrific for using distcc because using march native WILL break distcc usage.
-# This script needs MAKEOPTS will the right number of threads recommended
+# Automatic make.conf! Configures CFLAGS, CHOST, MAKEOPTS, Parallel-fetch, and licenses  This script uses equivalent March native to produce the CFLAGS. This is terrific for if you want an optimized computer and also be able to use distcc as march native WILL break distcc if used.
 
 #CFLAGS
 echo 'int main(){return 0;}' > test.c 

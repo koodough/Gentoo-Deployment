@@ -224,13 +224,21 @@ function test_variables
 
 }
 
-#Load Variables, all generated from the questions. Includes both architecture and feature commands
+#Load Variables that were all generated from the questions. Includes both architecture and feature commands
 function load_variables
 {
+	#Do the variables exist?
 	if [ -r "$directory_name/gentoo_variables" ];then
+		#Yes
 		print_step "Gentoo variables loaded"
 		source "$directory_name/gentoo_variables"
 	else
+		#No - probably first time using this script
+
+		#Welcome!
+		welcome_message;
+
+		#Run step 1
 		ask_questions; #Because you have too!@@@1
 	fi
 
@@ -307,6 +315,34 @@ function setup_features
 	done
 	# restore $IFS
 	IFS=$SAVEIFS
+}
+
+
+function help_message
+{
+welcome_message;
+}
+function welcome_message
+{
+	echo -e "\n
+Gentoo Deployment Intro\n
+	./features - All the scripts in ./features will be executed during the installation of Gentoo. Add/remove the scripts to/from ./features
+	./disabled-features - A folder to disable scripts from being used in Gentoo Deployment\n
+
+Current features selected to be installed...\n"
+
+	SAVEIFS=$IFS
+	IFS=$(echo -en "\n\b") 
+	FILES="$directory_name/features/*"
+	for f in $FILES
+	do
+		echo -e ${f##*/};
+		cat "$f" | sed -n 3,3p;
+		echo -e "\n"
+	done
+	# restore $IFS
+	IFS=$SAVEIFS
+
 }
 
 function ask_questions
@@ -496,7 +532,9 @@ function gentoo_pre_chroot
 function gentoo_pre_install
 {
 	if [[ ! -e "chroot.lock" ]]; then
-		echo -e '\033[1;31mHey! Your not in chroot!! Bad things would have happened... Run step 1.'
+		echo -e "\033[1;31mHey! Your not in chroot!! Bad things would have happened... \n\n
+		Make sure Gentoo has been configured and packages downloaded (Step 1, Step 2).\n\n
+		Then chroot into Gentoo (gentoo_deployment.sh 7)"
 		exit 1;
 	fi	
 
@@ -607,6 +645,7 @@ function gentoo_after_emerge
 ################################################################################
 ################################################################################
 ################################################################################
+#Script starts here
 
 load_variables;
 
@@ -636,5 +675,6 @@ case $choice in
 	6)gentoo_pre_chroot && gentoo_pre_install && gentoo_emerge && gentoo_after_emerge;;
 	7)gentoo_chroot;;
 	8)test_variables;;
+    *)help_message;;
 esac
 

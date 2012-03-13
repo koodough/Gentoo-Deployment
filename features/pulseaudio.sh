@@ -1,5 +1,6 @@
 #!/bin/bash
 #Pulseaudio
+#Install Pulseaudio
 
 PACKAGES="$PACKAGES pulseaudio media-plugins/gst-plugins-pulse libflashsupport media-plugins/alsa-plugins pavucontrol paprefs"
 

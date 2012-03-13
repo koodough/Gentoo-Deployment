@@ -1,5 +1,6 @@
 #!/bin/bash
-#Setups the fastest mirrors for gentoo
+#mirrorselect
+#mirrorselect setups the fastest mirrors for gentoo
 
 gentoo_commander pre_install	"USE=\"-*\" emerge mirrorselect"
 

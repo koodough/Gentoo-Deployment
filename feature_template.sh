@@ -35,7 +35,7 @@ function save_variables
 	#Just Writing a bash file, which then can be executed by gentoo_deployment.sh, if it in the features folder
 	print_step "Creating $filename file"
 	print_step "Saving commands in $directory_name/features/$filename"
-	echo -e "#!/bin/bash\n\n# $filename\n# $description\n# $URL\n\n" > "$directory_name/features/$filename"
+	echo -e "#!/bin/bash\n# $filename\n# $description\n# $URL\n\n" > "$directory_name/features/$filename"
 
 	for name in ${variables_array[@]}; do
 		var=`eval echo $\`echo $name\``
