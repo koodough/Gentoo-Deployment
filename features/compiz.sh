@@ -1,7 +1,6 @@
 #!/bin/bash
 #Compiz
-
-#It's not complete without compiz.
+#It's not complete desktop without compiz.
 
 PACKAGES="$PACKAGES x11-apps/fusion-icon x11-libs/compizconfig-backend-gconf x11-wm/emerald"
 gentoo_commander pre_install "echo -e \"\n\n
