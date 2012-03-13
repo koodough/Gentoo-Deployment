@@ -38,4 +38,8 @@ If you have no idea what this script does but understand the principles of insta
 Create ./features/kernel.sh to install a working kernel
 Better Debugging the progress of the Gentoo installation
 Ability to isolate features to either test or execute
+<<<<<<< HEAD
 "install.sh" shouldn't copy the git repo to a target machine (not necessary to copy all those files)
+=======
+"install.sh" shouldn't copy the git repo to a target machine (not necessary to copy all those files)
+>>>>>>> 52923a7db76e47b637b5abe293e0658461e46e89
