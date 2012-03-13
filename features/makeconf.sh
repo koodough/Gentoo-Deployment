@@ -10,7 +10,7 @@ gcc -v -Q -march=native -O2 test.c -o test &> test.config
 rm test.c test
 GEN_OPTS=`cat test.config | awk '{ printf "%s", $0 }' | awk -Ftest.c '{ print $2 }' `
 rm test.config
-APPEND_OPTS=" -auxbase -O2 -pipe -fomit-frame-pointer -mno-tls-direct-seg-refs"
+APPEND_OPTS=" -O2 -pipe -fomit-frame-pointer -mno-tls-direct-seg-refs"
 OPTIMIZATIONS="$GEN_OPTS $APPEND_OPTS"
 gentoo_commander make_config "#CFLAGS equivalent to -march=native"
 gentoo_commander make_config "CFLAGS=\"$OPTIMIZATIONS\""
