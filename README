@@ -1,4 +1,4 @@
-Gentoo Deployment Version 4
+Gentoo Deployment Version 4.1
 by Koodough Katsu
 
 ###Objective###
@@ -6,16 +6,11 @@ Answers all the questions needed to install Gentoo before any installation is pe
 
 
 ###Current Status###
-Still buggy with with the "afp.sh" feature and some other ones as well.
-Not so great handling with errors
 Able to download, configure, and emerge packages for the most part 
 
-###Yet TODO###
-A small summary to TODO
-Install Kernel
-Install grub bootloader
+###TODO###
+Create ./features/kernel.sh to install a working kernel
 Better Debugging the progress of the Gentoo installation
-Better documentation to create features for Gentoo, and understand what the hell a feature is (or think of a better name to describe a complete package install like an app store for gentoo. Roll?)
 Ability to isolate features to either test or execute
 "install.sh" shouldn't copy the git repo to a target machine (not necessary to copy all those files)
 
