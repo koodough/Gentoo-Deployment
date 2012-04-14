@@ -14,6 +14,8 @@ while true; do
 			break;;						
 		#[Nn]* ) echo -e "\033[32m\n\nYou must setup your \033[31mmake.conf\033[32m before proceeding any further. \n\033[0mPlease refer to \nhttp://www.gentoo.org/doc/en/handbook/handbook-x86.xml?part=1&chap=5 \nhttp://www.gentoo.org/doc/en/gcc-optimization.xml \nman make.conf\n/usr/share/portage/config/make.conf.example\n\n"; break;;
 		#* ) echo -e "\033[32m\n\nYou must setup your \033[31mmake.conf\033[32m before proceeding any further. \n\033[0mPlease refer to \nhttp://www.gentoo.org/doc/en/handbook/handbook-x86.xml?part=1&chap=5 \nhttp://www.gentoo.org/doc/en/gcc-optimization.xml \nman make.conf\n/usr/share/portage/config/make.conf.example\n\n"; break;;
+	* ) echo "No root tree profile"
+		break;;
 	esac
 done
 

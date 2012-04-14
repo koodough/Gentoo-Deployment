@@ -8,8 +8,8 @@
 PACKAGES="$PACKAGES git"
 
 
-read -p "user.name: " $git_user;
-read -p "user.email: " $git_email;
+read -p "Git user.name: " $git_user;
+read -p "Git user.email: " $git_email;
 gentoo_commander post_install "git config --global user.name $git_user" 
 gentoo_commander post_install "git config --global user.email $git_email" 
 gentoo_commander post_install "git config color.ui true" 
@@ -38,7 +38,8 @@ while true; do
 
 			break;;
 		#[Nn]*)break;;
-		#*)	break;;
+		*)	echo "No Github"
+			break;;
 	esac
 done
 

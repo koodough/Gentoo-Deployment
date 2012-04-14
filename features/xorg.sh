@@ -3,7 +3,7 @@
 #Installs Xorg with the choice of Gnome or Xmonad
 
 #++Type of system++#
-STANDARD_PACKAGES="syslog-ng app-admin/sysstat vixie-cron mlocate dhcpcd pciutils hwinfo app-misc/screen sudo eix gentoolkit lafilefixer app-arch/lzop net-misc/openssh net-misc/openssh-blacklist gpm htop powertop latencytop net-misc/htpdate sys-power/acpid"
+STANDARD_PACKAGES="syslog-ng app-admin/sysstat sys-process/lsof vixie-cron mlocate dhcpcd pciutils hwinfo app-misc/screen sudo eix gentoolkit lafilefixer app-arch/lzop net-misc/openssh net-misc/openssh-blacklist gpm htop powertop latencytop net-misc/htpdate sys-power/acpid"
 DESKTOP_PACKAGES="x11-base/xorg-server xorg-drivers x11vnc synergy"
 GNOME_PACKAGES="gnome x11-themes/gnome-colors-themes dbus www-client/chromium app-admin/gnome-system-tools gparted"
 #KDE_PACKAGES=""

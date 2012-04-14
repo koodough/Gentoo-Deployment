@@ -1,5 +1,9 @@
 TODO
 ####
+#
+* fix Date correct?: no
+./gentoo_deployment.sh: line 364: htpdate: command not found
+
 8/20/2011
 - Automatic Timezone
 - Verify that automatic fstab works

@@ -281,23 +281,26 @@ function setup_arch
 	#Try to detect arch, if not then give out a selection that are located in the arch directory
 	#Pick a computer architecture. The ones in grey are not supported
 	#GENTOO_MIRRORS="http://mirrors.cs.wmich.edu/gentoo http://chi-10g-1-mirror.fastsoft.net/pub/linux/gentoo/gentoo-distfiles/ http://gentoo.cites.uiuc.edu/pub/gentoo/"
-	mirror="http://mirrors.cs.wmich.edu/gentoo/releases";
+
+	#Default mirror
+	mirror=${mirror:-"http://www.gtlib.gatech.edu/pub/gentoo"};
+
 	echo -e "x86, i486, amd64, \033[1;30msparc, ppc, ppc64, alpha, hppa, mips, ia64, arm\033[1;0m"
 	read -p "Computer architecture (x86):" architecture;
 	architecture=${architecture:-"x86"}
 	case $architecture in
 		x86|i686)
-			stage3_filepath="x86/current-stage3/stage3-i686-*.tar.bz2";;
+			stage3_filepath="releases/x86/current-stage3/stage3-i686-*.tar.bz2";;
 		4|i486|i4*)
-			stage3_filepath="x86/current-stage3/stage3-i486-*.tar.bz2";;
+			stage3_filepath="releases/x86/current-stage3/stage3-i486-*.tar.bz2";;
 		amd64)
-			stage3_filepath="amd64/current-stage3/stage3-amd64-*.tar.bz2";;
+			stage3_filepath="releases/amd64/current-stage3/stage3-amd64-*.tar.bz2";;
 		*)
 			echo "This architecture is not supported in this script yet. Please refer to http://www.gentoo.org/doc/en/handbook/";;
 	esac
 	STAGE3_URL=`newest_stage "$mirror/$stage3_filepath"`
 	print_step "Stage3 URL:$STAGE3_URL";
-	PORTAGE_URL="$mirror/snapshots/current/portage-latest.tar.bz2";
+	PORTAGE_URL="$mirror/releases/snapshots/current/portage-latest.tar.bz2";
 	print_step "Portage URL:$PORTAGE_URL"
 }
 
@@ -327,7 +330,7 @@ function welcome_message
 	echo -e "
 \033[1;36mGentoo Deployment Intro\033[00m
 
-	./features - All the scripts in ./features will be executed during the installation of Gentoo. Add/remove the scripts to/from ./features
+	./features - All the scripts in ./features will be executed during the installation of Gentoo.
 	./disabled-features - A folder to disable scripts from being used in Gentoo Deployment
 
 \033[1;36mCurrent features selected to be installed...\033[00m\n"
