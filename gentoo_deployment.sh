@@ -613,9 +613,9 @@ function gentoo_emerge
 {
 	env-update && source /etc/profile
 
-	print_step "emerge -uDvNp --noreplace system; emerge -uDvNp --keep-going --noreplace world"
-	time emerge -uDvNp --noreplace system;
-	time emerge -uDvNp --keep-going --noreplace world;
+	print_step "emerge -uDvN --noreplace system; emerge -uDvN --keep-going --noreplace world"
+	time emerge -uDvN --noreplace system;
+	time emerge -uDvN --keep-going --noreplace world;
 	print_step "emerge --keep-going --noreplace --autounmask-write $PACKAGES";
 	time emerge --keep-going --noreplace --autounmask-write $PACKAGES;
 	if [[ $? != 0 ]]; then
